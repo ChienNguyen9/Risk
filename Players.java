@@ -1,6 +1,9 @@
 public class Players {
 
-  Players() {
+  String sName;
 
+  Players(String name) {
+    sName = name;
   }
+
 }
