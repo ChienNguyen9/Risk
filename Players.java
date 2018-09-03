@@ -2,10 +2,12 @@ public class Players {
 
   String sName;
   String sColor;
+  int nDice;
 
   Players(String name, String color) {
     this.sName = name;
     this.sColor = color;
+    this.nDice = 0;
   }
 
   public String getName() {
@@ -14,6 +16,14 @@ public class Players {
 
   public String getColor() {
     return this.sColor;
+  }
+
+  public void setDice(int dice) {
+    this.nDice = dice;
+  }
+
+  public int getDice() {
+    return this.nDice;
   }
 
   public void displayInfo() {
