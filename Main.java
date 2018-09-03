@@ -74,5 +74,56 @@ public class Main {
       System.out.println("=============================================================");
     }
 
+/*
+    // Game Starts
+    bGameRunning = true;
+    int nTurn = 0;
+    while(bGameRunning) {
+
+      switch(nTurn) {
+        case 1:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+
+        case 2:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+
+        case 3:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+
+        case 4:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+
+        case 5:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+
+        case 6:
+        // Getting and placing new armies.
+        // Attacking.
+        // Fortifying your position.
+        break;
+      }
+      nTurn++;  // Next player
+    }
+*/
+
+
+
+
+
   }
 }
