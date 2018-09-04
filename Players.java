@@ -3,11 +3,13 @@ public class Players {
   String sName;
   String sColor;
   int nDice;
+  int nArmies;
 
-  Players(String name, String color) {
+  Players(String name, String color, int armies) {
     this.sName = name;
     this.sColor = color;
     this.nDice = 0;
+    this.nArmies = armies;
   }
 
   public String getName() {

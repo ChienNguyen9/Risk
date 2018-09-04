@@ -9,6 +9,7 @@ public class Main {
     String sColorOption[] = {"Red", "Green", "Blue", "Purple", "Orange", "Yellow", "Teal"};
     int nNumPlayers = 0;
     int nColor = 0;
+    int nArmies = 0;
 
     Players[] players;
 
@@ -37,6 +38,19 @@ public class Main {
 
     players = new Players[nNumPlayers];
 
+    // Give each player the amount of infantry
+    if(nNumPlayers == 2)  // Not sure what to do for 2 players
+      nArmies = 1;
+    if(nNumPlayers == 3)
+      nArmies = 35;
+    if(nNumPlayers == 4)
+      nArmies = 30;
+    if(nNumPlayers == 5)
+      nArmies = 25;
+    if(nNumPlayers == 6)
+      nArmies = 20;
+
+
 
     for(int p = 0; p < nNumPlayers; p++) {
       String sName = "Player " + (p+1);
@@ -60,7 +74,7 @@ public class Main {
         }
       }while(bGameRunning);
 
-      players[p] = new Players(sName, sColorOption[nColor-1]);
+      players[p] = new Players(sName, sColorOption[nColor-1], nArmies);
       sColorOption[nColor-1] = null;
 
       System.out.println();
