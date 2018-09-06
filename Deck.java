@@ -47,13 +47,11 @@ public class Deck {
 
 	//Add cards to the deck
 	public void add(Card card) {
-
 		deck.add(card);
 	}
 
 	//Shuffle deck
 	public void shuffle() {
-
 		Collections.shuffle(deck);
 	}
 }

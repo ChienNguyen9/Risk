@@ -6,10 +6,14 @@ public class playerHand {
 	private ArrayList<Card> hand;
 
 	//Create players' hands
-	public playerHand() { hand = new ArrayList<Card>();	}
+	public playerHand() {
+		hand = new ArrayList<Card>();
+	}
 
 	//Add card to player's Hand
-	public void add(Card card) { hand.add(card); }
+	public void add(Card card) {
+		hand.add(card);
+	}
 
 	//Removes 3 cards from player's hand for trading in
 	public void removeFromHand(int card1, int card2, int card3) {
@@ -49,6 +53,8 @@ public class playerHand {
 	}
 
 	//Return player's hand
-	public ArrayList<Card> getHand() { return hand; }
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
 
 }
