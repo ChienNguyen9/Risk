@@ -1,4 +1,3 @@
-import javax.swing.JOptionPane;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -12,6 +11,7 @@ public class Main {
     int nArmies = 0;
 
     Players[] players;
+    Dice dice = new Dice();
 
     boolean bGameRunning = true;
     Scanner sc;
@@ -78,21 +78,26 @@ public class Main {
       sColorOption[nColor-1] = null;
 
       System.out.println();
-      System.out.println("=============================================================");
+      System.out.println("=============================================================\n\n\n\n\n\n");
     }
 
     for(int p = 0; p < nNumPlayers; p++) {
       System.out.println("=============================================================");
       System.out.println("Player " + (p+1) + " is name: " + players[p].getName());
       System.out.println("Player " + (p+1) + " is color: " + players[p].getColor());
-      System.out.println("=============================================================");
+      System.out.println("=============================================================\n\n");
     }
+
+    // Setup number 2 - whoever rolls the highest number gets to choose any territory
+    
+
 
 /*
     // Game Starts
     bGameRunning = true;
     int nTurn = 0;
     while(bGameRunning) {
+      // Check if any player has conquers all the country
 
       switch(nTurn) {
         case 1:
@@ -134,9 +139,6 @@ public class Main {
       nTurn++;  // Next player
     }
 */
-
-
-
 
 
   }
