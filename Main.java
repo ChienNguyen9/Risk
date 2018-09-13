@@ -6,6 +6,7 @@ public class Main {
   public static void main(String[] args) {
 
     String sColorOption[] = {"Red", "Green", "Blue", "Purple", "Orange", "Yellow", "Teal"};
+    String sWinner[] = {"0", "0", "0", "0", "0", "0"};
     int nNumPlayers = 0;
     int nColor = 0;
     int nArmies = 0;
@@ -78,7 +79,7 @@ public class Main {
       sColorOption[nColor-1] = null;
 
       System.out.println();
-      System.out.println("=============================================================\n\n\n\n\n\n");
+      System.out.println("=============================================================\n\n");
     }
 
     for(int p = 0; p < nNumPlayers; p++) {
@@ -89,7 +90,56 @@ public class Main {
     }
 
     // Setup number 2 - whoever rolls the highest number gets to choose any territory
-    
+    System.out.println("===================== Whoever rolls the dice gets to pick first territory ========================================\n");
+    int nPlayerWin = 0;
+    bGameRunning = true;
+    while(bGameRunning == true) {
+      int nWinner = 0;
+
+      for(int p = 0; p < nNumPlayers; p++) {
+        if(sWinner[p] != null) {
+          System.out.println("\n=============================================================");
+          players[p].setDice(dice.rollDice(1));
+          System.out.println("Player " + (p+1) + " roll a: " + players[p].getDice());
+          System.out.println("=============================================================");
+
+          if(players[nPlayerWin].getDice() < players[p].getDice()) {
+            sWinner[nPlayerWin] = null;
+            nPlayerWin = p;
+          }else if(players[nPlayerWin].getDice() > players[p].getDice()) {
+            sWinner[p] = null;
+          }
+
+        }
+      }
+
+      // Check if there is a winner
+      for(int c = 0; c < nNumPlayers; c++) {
+        if(sWinner[c] != null)
+            nWinner++;
+      }
+
+      if(nWinner == 1) {
+        System.out.println("\n=============================================================");
+        System.out.println("Player " + nPlayerWin + " gets to pick territory first... ");
+        System.out.println("=============================================================");
+        bGameRunning = false;
+      } else {
+        System.out.println("\n\n There are 2 or more players that have the same number. Must roll again.");
+        System.out.println("Press Enter key to continue...");
+        try
+        {
+            System.in.read();
+        }
+        catch(Exception e)
+        {
+          System.out.println(e.getMessage());
+        }
+      }
+
+    }
+
+
 
 
 /*
