@@ -1,18 +1,81 @@
 import javax.swing.JOptionPane;
 import java.util.Scanner;
 import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.lang.StringBuilder;
+import java.io.File;
 
 public class Main {
 
   public static void main(String[] args) {
+	private String countryFile = "Countries.txt";
+	private String continentFile = "Continents.txt";
+	private String borderingCountryFile  = "BorderingCountries.txt";
+	private String fileLine;
+	private String fileInput;
+	private BufferedReader reader;
+	private StringBuilder stringBuilder;
+	private String[] Countries;
+	private String[] Continents;
+	private String[] borderingCountries;
+	private RiskBoard Board;
+	private boolean createdBoard;
+	
+	createdBoard = false;
+	Board = new RiskBoard();
+	
+	try{
+		reader = new BufferedReader(new FileReader(countryFile));
+		stringBuilder = new StringBuilder();
+		while((fileLine = reader.readLine()) != null) {
+			stringBuilder.append(fileLine);
+		}
+		fileInput = stringBuilder.toString();
+		Countries = fileInput.split("\t");
+		System.out.println(Arrays.toString(Countries) + "\n");
+		
+		
+		reader = new BufferedReader(new FileReader(continentFile));
+		stringBuilder = new StringBuilder();
+		while((fileLine = reader.readLine()) != null) {
+			stringBuilder.append(fileLine);
+		}
+		fileInput = stringBuilder.toString();
+		Continents = fileInput.split("\t");
+		System.out.println(Arrays.toString(Continents) + "\n");
+		
+		reader = new BufferedReader(new FileReader(borderingCountryFile));
+		stringBuilder = new StringBuilder();
+		while((fileLine = reader.readLine()) != null){
+			stringBuilder.append(fileLine);
+		}
+		fileInput = stringBuilder.toString();
+		borderingCountries = fileInput.split(",");
+		System.out.println(Arrays.toString(borderingCountries));
+		
+		createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
+		
+		
+	}catch(FileNotFoundException e) {
+		System.out.println(e.getMessage());
+	}catch(IOException e) {
+		System.out.println(e.getMessage());
+	}
+	
+	 
 
-    String sColorOption[] = {"Red", "Green", "Blue", "Purple", "Orange", "Yellow", "Teal"};
-    int nNumPlayers = 0;
-    int nColor = 0;
+    private String sColorOption[] = {"Red", "Green", "Blue", "Purple", "Orange", "Yellow", "Teal"};
+    private int nNumPlayers = 0;
+    private int nColor = 0;
 
     Players[] players;
 
-    boolean bGameRunning = true;
+    private boolean bGameRunning = true;
     Scanner sc;
 
     System.out.println("=============================================================");
