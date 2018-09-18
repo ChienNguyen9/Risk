@@ -5,6 +5,8 @@ public class Players {
 
   private String sName;
   private String sColor;
+  private int nDice;
+  private int nArmies;
   
   private int numOfArmies;
   private HashMap<String, Country> hasCountry;
@@ -13,6 +15,7 @@ public class Players {
   public Players(String name, String color, int nArmy) {
 	  this.sName = name;
 	  this.sColor = color;
+    this.nDice = 0;
 	  this.numOfArmies = nArmy;
 	  hasCountry = new HashMap<String, Country>();
 	  hasContinent = new HashMap<String, Continent>();
@@ -28,6 +31,14 @@ public class Players {
   
   public int getNumOfArmies() {
 	  return numOfArmies;
+  }
+
+  public void setDice(int dice) {
+    this.nDice = dice;
+  }
+
+  public int getDice() {
+    return this.nDice;
   }
 
   public void displayInfo() {
