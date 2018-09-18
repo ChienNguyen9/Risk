@@ -1,15 +1,24 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Players {
 
-  String sName;
-  String sColor;
-  int nDice;
-  int nArmies;
+  private String sName;
+  private String sColor;
+  private int nDice;
+  private int nArmies;
+  
+  private int numOfArmies;
+  private HashMap<String, Country> hasCountry;
+  private HashMap<String, Continent> hasContinent;
 
-  Players(String name, String color, int armies) {
-    this.sName = name;
-    this.sColor = color;
+  public Players(String name, String color, int nArmy) {
+	  this.sName = name;
+	  this.sColor = color;
     this.nDice = 0;
-    this.nArmies = armies;
+	  this.numOfArmies = nArmy;
+	  hasCountry = new HashMap<String, Country>();
+	  hasContinent = new HashMap<String, Continent>();
   }
 
   public String getName() {
@@ -18,6 +27,10 @@ public class Players {
 
   public String getColor() {
     return this.sColor;
+  }
+  
+  public int getNumOfArmies() {
+	  return numOfArmies;
   }
 
   public void setDice(int dice) {
@@ -34,5 +47,36 @@ public class Players {
     System.out.println("Color: " + this.sColor);
     System.out.println("=============================================================");
   }
-
+  public void gainCountry(Country nameOfCountry) {
+	  System.out.println(nameOfCountry.getName() + " has been acquired by " + sName + ".");
+	  hasCountry.put(nameOfCountry.getName(), nameOfCountry);
+  }
+  public void gainCountry(ArrayList<Country> listOfCountries) {
+	  for(int i = 0; i < listOfCountries.size(); i++) {
+		  hasCountry.put(listOfCountries.get(i).getName(), listOfCountries.get(i));
+	  }
+  }
+  public void lostCountry(String nameOfCountry) {
+	  System.out.println(nameOfCountry + " is no longer occupied by " + sName + ".");
+	  hasCountry.remove(nameOfCountry);
+  }
+  public void gainContinent(Continent nameOfContinent) {
+	  System.out.println(nameOfContinent.getName() + " is now controlled by " + sName + ", and after every turn will receive " + nameOfContinent.getExtraArmies() + " bonus armies.");
+	  hasContinent.put(nameOfContinent.getName(), nameOfContinent);
+  }
+  public void lostContinent(String nameOfContinent) {
+	  hasContinent.remove(nameOfContinent);
+  }
+  public ArrayList<Country> countriesPlayerHas(){
+	  return new ArrayList<Country>(hasCountry.values());
+  }
+  public void gainArmies(int nArmies) {
+	  numOfArmies = numOfArmies + nArmies;
+	  System.out.println(sName + " has gained " + nArmies + " armies and now has " + numOfArmies + " total armies.");
+  }
+  public void loseArmies(int nArmies) {
+	  numOfArmies = numOfArmies - nArmies;
+	  System.out.println(sName + "'s remaining number of armies: " + numOfArmies);
+  }
+  
 }
