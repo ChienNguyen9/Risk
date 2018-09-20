@@ -19,11 +19,11 @@ public class Card {
 
   @Test
   public String getType() {
-	return armyType;
+	   return armyType;
   }
 
   @Test
   public Country getCountry() {
-	return country;
+	   return country;
   }
 }
