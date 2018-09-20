@@ -1,9 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
+package test.java;
+import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Players {
+public class Players extends TestCase{
 
   private String sName;
   private String sColor;

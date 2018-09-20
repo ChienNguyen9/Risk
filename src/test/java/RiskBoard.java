@@ -1,9 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
+package test.java;
+import junit.framework.TestCase;
 import org.junit.jupiter.api.main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RiskBoard {
+public class RiskBoard extends TestCase{
 	public RiskBoard() {}
 	private String[] Continents;
 	private String[] borderingCountries;
