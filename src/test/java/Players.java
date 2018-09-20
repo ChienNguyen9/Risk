@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Players {
+public class Players extends TestCase{
 
   private String sName;
   private String sColor;
@@ -15,6 +15,7 @@ public class Players {
   private HashMap<String, Country> hasCountry;
   private HashMap<String, Continent> hasContinent;
 
+  @Test
   public Players(String name, String color, int nArmy) {
 	  this.sName = name;
 	  this.sColor = color;

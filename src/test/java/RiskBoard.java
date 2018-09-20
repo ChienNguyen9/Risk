@@ -4,7 +4,8 @@ import org.junit.jupiter.api.main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RiskBoard extends TestCase{
+public class RiskBoard extends TestCase {
+	@Test
 	public RiskBoard() {}
 	private String[] Continents;
 	private String[] borderingCountries;
