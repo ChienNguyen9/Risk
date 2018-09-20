@@ -14,16 +14,16 @@ public class RiskBoard {
 	private ArrayList<Country> listOfBorderingCountries;
 	private ArrayList<Country> listOfLocalCountries;
 	private ArrayList<Country> vacancy;
-	
+
 	public boolean SetBoard(String[] countryInputs, String[] continentInputs, String[] borderingCountriesInputs ) {
 		generated = false;
-		
+
 		mapOfCountries = new HashMap<String, Country>();
 		for(int i = 0; i < countryInputs.length; i++) {
 			mapOfCountries.put(countryInputs[i], new Country(countryInputs[i]));
 		}
 		listOfCountries = new ArrayList<Country>(mapOfCountries.values());
-		
+
 		mapOfContinents = new HashMap<String, Continent>();
 		for(int i = 0; i < continentInputs.length; i++) {
 			Continents = continentInputs[i].split(",");
@@ -43,7 +43,7 @@ public class RiskBoard {
 			}
 			mapOfCountries.get(borderingCountries[0]).addBorders(listOfBorderingCountries);
 		}
-		
+
 		generated = true;
 		return generated;
 	}
@@ -90,7 +90,7 @@ public class RiskBoard {
 		return mapOfCountries.get(nameOfCountry).getArmies();
 	}
 	public ArrayList<Country> returnVacancy(){
-		
+
 		vacancy = new ArrayList<Country>();
 		for(int i = 0; i < listOfCountries.size(); i++) {
 			if(listOfCountries.get(i).occupied() == false) {
@@ -98,6 +98,6 @@ public class RiskBoard {
 			}
 		}
 		return vacancy;
-		
+
 	}
 }

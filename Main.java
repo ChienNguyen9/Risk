@@ -58,7 +58,7 @@ public class Main {
       borderingCountries = fileInput.split(",");
       System.out.println(Arrays.toString(borderingCountries));
 
-      //createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
+      createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
 
 
     }catch(FileNotFoundException e) {
