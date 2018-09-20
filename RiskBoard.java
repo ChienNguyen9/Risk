@@ -35,13 +35,13 @@ public class RiskBoard {
 			mapOfContinents.put(Continents[0], new Continent(Continents[0], Integer.parseInt(Continents[1]), listOfLocalCountries));
 		}
 		for(int i = 0; i < borderingCountriesInputs.length; i++) {
-			borderingCountries = borderingCountries[i].split(",");
+			borderingCountries = borderingCountriesInputs[i].split(",");
 			listOfBorderingCountries = new ArrayList<Country>();
 			for(int j = 0; j < borderingCountries.length; j++) {
 				System.out.println("adding to borders: " + borderingCountries[j]);
 				listOfBorderingCountries.add(mapOfCountries.get(borderingCountries[j]));
 			}
-			mapOfCountries.get(borderingCountries[0]).addBorders(listOfBorderingCountries);
+			//mapOfCountries.get(borderingCountries[0]).addBorders(listOfBorderingCountries);
 		}
 
 		generated = true;
