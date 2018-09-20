@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Players extends TestCase{
+public class Players {
 
   private String sName;
   private String sColor;
