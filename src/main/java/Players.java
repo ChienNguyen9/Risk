@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,7 +41,6 @@ public class Players {
     return this.nDice;
   }
 
-  @Test
   public void displayInfo() {
     System.out.println("=============================================================");
     System.out.println("Name: " + this.sName);
@@ -65,7 +62,6 @@ public class Players {
 	  hasCountry.remove(nameOfCountry);
   }
 
-  @Test
   public void gainContinent(Continent nameOfContinent) {
 	  System.out.println(nameOfContinent.getName() + " is now controlled by " + sName + ", and after every turn will receive " + nameOfContinent.getExtraArmies() + " bonus armies.");
 	  hasContinent.put(nameOfContinent.getName(), nameOfContinent);
@@ -84,7 +80,6 @@ public class Players {
 	  System.out.println(sName + " has gained " + nArmies + " armies and now has " + numOfArmies + " total armies.");
   }
 
-  @Test
   public void loseArmies(int nArmies) {
 	  numOfArmies = numOfArmies - nArmies;
 	  System.out.println(sName + "'s remaining number of armies: " + numOfArmies);

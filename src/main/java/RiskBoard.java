@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,7 +14,6 @@ public class RiskBoard {
 	private ArrayList<Country> listOfLocalCountries;
 	private ArrayList<Country> vacancy;
 
-	@Test
 	public boolean SetBoard(String[] countryInputs, String[] continentInputs, String[] borderingCountriesInputs ) {
 		generated = false;
 
@@ -95,7 +92,6 @@ public class RiskBoard {
 		return mapOfCountries.get(nameOfCountry).getArmies();
 	}
 
-	@Test
 	public ArrayList<Country> returnVacancy(){
 
 		vacancy = new ArrayList<Country>();
