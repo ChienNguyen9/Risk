@@ -1,9 +1,4 @@
 language: java
 
 script:
-  - java Main
-  - 2
-  - A
-  - B
-  - 1
-  - 2
+  - java Main.java < Testing1.txt
