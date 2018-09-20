@@ -7,7 +7,7 @@ public class Players {
   private String sColor;
   private int nDice;
   private int nArmies;
-  
+
   private int numOfArmies;
   private HashMap<String, Country> hasCountry;
   private HashMap<String, Continent> hasContinent;
@@ -28,7 +28,7 @@ public class Players {
   public String getColor() {
     return this.sColor;
   }
-  
+
   public int getNumOfArmies() {
 	  return numOfArmies;
   }
@@ -41,12 +41,14 @@ public class Players {
     return this.nDice;
   }
 
+  @Test
   public void displayInfo() {
     System.out.println("=============================================================");
     System.out.println("Name: " + this.sName);
     System.out.println("Color: " + this.sColor);
     System.out.println("=============================================================");
   }
+
   public void gainCountry(Country nameOfCountry) {
 	  System.out.println(nameOfCountry.getName() + " has been acquired by " + sName + ".");
 	  hasCountry.put(nameOfCountry.getName(), nameOfCountry);
@@ -60,23 +62,30 @@ public class Players {
 	  System.out.println(nameOfCountry + " is no longer occupied by " + sName + ".");
 	  hasCountry.remove(nameOfCountry);
   }
+
+  @Test
   public void gainContinent(Continent nameOfContinent) {
 	  System.out.println(nameOfContinent.getName() + " is now controlled by " + sName + ", and after every turn will receive " + nameOfContinent.getExtraArmies() + " bonus armies.");
 	  hasContinent.put(nameOfContinent.getName(), nameOfContinent);
   }
+
   public void lostContinent(String nameOfContinent) {
 	  hasContinent.remove(nameOfContinent);
   }
+
   public ArrayList<Country> countriesPlayerHas(){
 	  return new ArrayList<Country>(hasCountry.values());
   }
+
   public void gainArmies(int nArmies) {
 	  numOfArmies = numOfArmies + nArmies;
 	  System.out.println(sName + " has gained " + nArmies + " armies and now has " + numOfArmies + " total armies.");
   }
+
+  @Test
   public void loseArmies(int nArmies) {
 	  numOfArmies = numOfArmies - nArmies;
 	  System.out.println(sName + "'s remaining number of armies: " + numOfArmies);
   }
-  
+
 }

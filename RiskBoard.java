@@ -15,6 +15,7 @@ public class RiskBoard {
 	private ArrayList<Country> listOfLocalCountries;
 	private ArrayList<Country> vacancy;
 
+	@Test
 	public boolean SetBoard(String[] countryInputs, String[] continentInputs, String[] borderingCountriesInputs ) {
 		generated = false;
 
@@ -89,6 +90,8 @@ public class RiskBoard {
 	public int returnNumOfArmies(String nameOfCountry) {
 		return mapOfCountries.get(nameOfCountry).getArmies();
 	}
+
+	@Test
 	public ArrayList<Country> returnVacancy(){
 
 		vacancy = new ArrayList<Country>();
