@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class Card {
-
+  @Test
   private String armyType;
   private Country country;
 

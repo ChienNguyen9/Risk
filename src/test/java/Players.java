@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Players {
-
+  @Test
   private String sName;
   private String sColor;
   private int nDice;

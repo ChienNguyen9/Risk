@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class playerHand {
-
+	@Test
 	private boolean condition;
 	private ArrayList<Card> hand;
 
