@@ -1,6 +1,4 @@
-# Risk Game Rules
-
-# Source from http://www.ultraboardgames.com/risk/game-rules.php
+# Risk Game Rules [![Build Status](https://travis-ci.org/OPzCatchMee/Risk.svg?branch=master)](https://travis-ci.org/OPzCatchMee/Risk)
 
 # Game Board
 
