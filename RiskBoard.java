@@ -14,36 +14,39 @@ public class RiskBoard {
 	private ArrayList<Country> listOfBorderingCountries;
 	private ArrayList<Country> listOfLocalCountries;
 	private ArrayList<Country> vacancy;
-
+	
 	public boolean SetBoard(String[] countryInputs, String[] continentInputs, String[] borderingCountriesInputs ) {
 		generated = false;
-
+		
 		mapOfCountries = new HashMap<String, Country>();
 		for(int i = 0; i < countryInputs.length; i++) {
 			mapOfCountries.put(countryInputs[i], new Country(countryInputs[i]));
 		}
+		
 		listOfCountries = new ArrayList<Country>(mapOfCountries.values());
+
+		for(int i = 0; i < borderingCountriesInputs.length; i++) {
+			borderingCountries = borderingCountriesInputs[i].split(",");
+			listOfBorderingCountries = new ArrayList<Country>();
+			for(int j = 1; j < borderingCountries.length; j++) {
+				System.out.println(borderingCountries[0] + "'s list of borders has added: " + borderingCountries[j]);
+				listOfBorderingCountries.add(mapOfCountries.get(borderingCountries[j]));
+			}
+			mapOfCountries.get(borderingCountries[0]).addBorders(listOfBorderingCountries);
+		}
 
 		mapOfContinents = new HashMap<String, Continent>();
 		for(int i = 0; i < continentInputs.length; i++) {
 			Continents = continentInputs[i].split(",");
 			listOfLocalCountries = new ArrayList<Country>();
 			for(int j = 2; j < Continents.length; j++) {
-				System.out.println(Continents[0] + " add " + Continents[j]);
+				System.out.println(Continents[0] + "'s list of Countries has added: " + Continents[j]);
 				listOfLocalCountries.add(mapOfCountries.get(Continents[j]));
 			}
 			mapOfContinents.put(Continents[0], new Continent(Continents[0], Integer.parseInt(Continents[1]), listOfLocalCountries));
 		}
-		for(int i = 0; i < borderingCountriesInputs.length; i++) {
-			borderingCountries = borderingCountriesInputs[i].split(",");
-			listOfBorderingCountries = new ArrayList<Country>();
-			for(int j = 0; j < borderingCountries.length; j++) {
-				System.out.println("adding to borders: " + borderingCountries[j]);
-				listOfBorderingCountries.add(mapOfCountries.get(borderingCountries[j]));
-			}
-			//mapOfCountries.get(borderingCountries[0]).addBorders(listOfBorderingCountries);
-		}
 
+	
 		generated = true;
 		return generated;
 	}
@@ -90,7 +93,7 @@ public class RiskBoard {
 		return mapOfCountries.get(nameOfCountry).getArmies();
 	}
 	public ArrayList<Country> returnVacancy(){
-
+		
 		vacancy = new ArrayList<Country>();
 		for(int i = 0; i < listOfCountries.size(); i++) {
 			if(listOfCountries.get(i).occupied() == false) {
@@ -98,6 +101,6 @@ public class RiskBoard {
 			}
 		}
 		return vacancy;
-
+		
 	}
 }
