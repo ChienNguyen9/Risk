@@ -1,4 +1,9 @@
 language: java
 
 script:
-  - java Main.java < Testing1.txt
+  2
+  A
+  B
+  1
+  2
+  mvn test
