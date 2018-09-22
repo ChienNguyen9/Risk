@@ -24,36 +24,36 @@ public class Main {
 
 	  createdBoard = false;
 	  Board = new RiskBoard();
-		
+
 	  try{
-		reader = new BufferedReader(new FileReader(countryFile));
-		stringBuilder = new StringBuilder();
-		while((fileLine = reader.readLine()) != null) {
-			stringBuilder.append(fileLine);
-		}
-		fileInput = stringBuilder.toString();
-		Countries = fileInput.split("\t");
-		System.out.println(Arrays.toString(Countries) + "\n");
-		      
-		reader = new BufferedReader(new FileReader(borderingCountryFile));
-		stringBuilder = new StringBuilder();
-		while((fileLine = reader.readLine()) != null){
-			stringBuilder.append(fileLine);
-		}
-		fileInput = stringBuilder.toString();
-		borderingCountries = fileInput.split("\t");
-		System.out.println(Arrays.toString(borderingCountries));
-		
-		reader = new BufferedReader(new FileReader(continentFile));
-		stringBuilder = new StringBuilder();
-		while((fileLine = reader.readLine()) != null) {
-			stringBuilder.append(fileLine);
-		}
-		fileInput = stringBuilder.toString();
-		Continents = fileInput.split("\t");
-		System.out.println(Arrays.toString(Continents) + "\n");
-		
-		createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
+  		reader = new BufferedReader(new FileReader(countryFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+		   }
+  		fileInput = stringBuilder.toString();
+  		Countries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Countries) + "\n");
+
+  		reader = new BufferedReader(new FileReader(borderingCountryFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null){
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		borderingCountries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(borderingCountries));
+
+  		reader = new BufferedReader(new FileReader(continentFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		Continents = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Continents) + "\n");
+
+		  createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
 		}catch(FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		}catch(IOException e) {
@@ -146,22 +146,22 @@ public class Main {
 
     // Setup number 2 - whoever rolls the highest number gets to choose any territory
     System.out.println("===================== Whoever rolls the dice gets to pick first territory ========================================\n");
-    int nPlayerWin = 0;
+    int nPlayerTurn = 0;
     bGameRunning = true;
     while(bGameRunning == true) {
       int nWinner = 0;
 
       for(int p = 0; p < nNumPlayers; p++) {
         if(sWinner[p] != null) {
-          System.out.println("\n=============================================================");
+          System.out.println("=============================================================");
           players[p].setDice(dice.rollDice(1));
           System.out.println("Player " + (p+1) + " roll a: " + players[p].getDice());
           System.out.println("=============================================================");
 
-          if(players[nPlayerWin].getDice() < players[p].getDice()) {
-            sWinner[nPlayerWin] = null;
-            nPlayerWin = p;
-          }else if(players[nPlayerWin].getDice() > players[p].getDice()) {
+          if(players[nPlayerTurn].getDice() < players[p].getDice()) {
+            sWinner[nPlayerTurn] = null;
+            nPlayerTurn = p;
+          }else if(players[nPlayerTurn].getDice() > players[p].getDice()) {
             sWinner[p] = null;
           }
 
@@ -176,7 +176,7 @@ public class Main {
 
       if(nWinner == 1) {
         System.out.println("\n=============================================================");
-        System.out.println("Player " + (nPlayerWin+1) + " gets to pick territory first... ");
+        System.out.println("Player " + (nPlayerTurn+1) + " gets to pick territory first... ");
         System.out.println("=============================================================");
         bGameRunning = false;
       } else {
@@ -191,10 +191,56 @@ public class Main {
           System.out.println(e.getMessage());
         }
       }
-
     }
 
+    // Set up - Claim territories
+    String sCountriesClaim;
+    int nCountriesClaim = Board.returnCountries().size();
+    boolean bCountryClaim = false;
+    while(nCountriesClaim >= 1) {
+      System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
+      System.out.println("1. List all the countries...");
 
+      bCountryClaim = false;
+      sc = new Scanner(System.in);
+      sCountriesClaim = sc.nextLine();
+
+      if(sCountriesClaim.equals("1"))
+      {
+        for(int i = 0; i < Board.returnVacancy().size(); i++) {
+            System.out.println(Board.returnVacancy().get(i).getName());
+        }
+      }
+      else
+      {
+
+        // Check if the country has been taken
+        for(int i = 0; i < Board.returnVacancy().size(); i++)
+        {
+          if(sCountriesClaim.equals(Board.returnVacancy().get(i).getName()))
+            bCountryClaim = true; // Country has not been claim
+
+        }
+
+        if(bCountryClaim)
+        {
+          Board.setPlayer(sCountriesClaim, players[nPlayerTurn]);
+          players[nPlayerTurn].gainCountry(Board.returnNameOfCountry(sCountriesClaim));
+          // Player take turn
+          if(nPlayerTurn < nNumPlayers-1)
+            nPlayerTurn++;
+          else
+            nPlayerTurn = 0;
+        }
+        else
+        {
+          System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
+          System.out.println("1. Country has been claim already...");
+          System.out.println("2. Incorrect input (Press 1 to list country and type the exact way...)\n");
+        }
+      }
+      nCountriesClaim = Board.returnVacancy().size();
+    }
 
 
 /*
