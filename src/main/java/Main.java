@@ -66,6 +66,9 @@ public class Main {
     int nColor = 0;
     int nArmies = 0;
 
+    String sUserInput;
+    int nUserInput;
+
     Players[] players;
     Dice dice = new Dice();
 
@@ -194,18 +197,17 @@ public class Main {
     }
 
     // Set up - Claim territories
-    String sCountriesClaim;
     int nCountriesClaim = Board.returnCountries().size();
-    boolean bCountryClaim = false;
+    boolean bValidName = false;
     while(nCountriesClaim >= 1) {
       System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
       System.out.println("1. List all the countries...");
 
-      bCountryClaim = false;
+      bValidName = false;
       sc = new Scanner(System.in);
-      sCountriesClaim = sc.nextLine();
+      sUserInput = sc.nextLine();
 
-      if(sCountriesClaim.equals("1"))
+      if(sUserInput.equals("1"))
       {
         for(int i = 0; i < Board.returnVacancy().size(); i++) {
             System.out.println(Board.returnVacancy().get(i).getName());
@@ -217,15 +219,18 @@ public class Main {
         // Check if the country has been taken
         for(int i = 0; i < Board.returnVacancy().size(); i++)
         {
-          if(sCountriesClaim.equals(Board.returnVacancy().get(i).getName()))
-            bCountryClaim = true; // Country has not been claim
+          if(sUserInput.equals(Board.returnVacancy().get(i).getName()))
+            bValidName = true; // Country has not been claim
 
         }
 
-        if(bCountryClaim)
+        if(bValidName)
         {
-          Board.setPlayer(sCountriesClaim, players[nPlayerTurn]);
-          players[nPlayerTurn].gainCountry(Board.returnNameOfCountry(sCountriesClaim));
+          Board.setPlayer(sUserInput, players[nPlayerTurn]);
+          players[nPlayerTurn].gainCountry(Board.returnNameOfCountry(sUserInput));
+          Board.setNumOfArmies(sUserInput, 1); // Add 1 troops to country
+          players[nPlayerTurn].loseArmies(1);
+
           // Player take turn
           if(nPlayerTurn < nNumPlayers-1)
             nPlayerTurn++;
@@ -240,6 +245,75 @@ public class Main {
         }
       }
       nCountriesClaim = Board.returnVacancy().size();
+    }
+
+    // Set remaining troops that players have
+    bGameRunning = true;
+    while(bGameRunning)
+    {
+      // All user have place their troops
+      bGameRunning = false;
+      for(int p = 0; p < nNumPlayers; p++) {
+        if(players[p].getNumOfArmies() > 0) {
+          bGameRunning = true;
+        }
+      }
+
+      if(players[nPlayerTurn].getNumOfArmies() > 0)
+      {
+        bValidName = false;
+        System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + ", which country would you like to add troop to?");
+        sc = new Scanner(System.in);
+        sUserInput = sc.nextLine();
+
+        // Check if the country belongs to that player
+        for(int i = 0; i < players[nPlayerTurn].countriesPlayerHas().size(); i++)
+        {
+          if(sUserInput.equals(players[nPlayerTurn].countriesPlayerHas().get(i).getName()))
+            bValidName = true;
+        }
+
+        if(bValidName)
+        {
+          players[nPlayerTurn].loseArmies(0); // Display how many troop this player has left
+          System.out.println("How many troops would you like to add to " + sUserInput + "?");
+          sc = new Scanner(System.in);
+          nUserInput = sc.nextInt();
+
+          if(nUserInput <= players[nPlayerTurn].getNumOfArmies() && nUserInput >= 0)
+          {
+            // Add troop to country
+            for(int i = 0; i < players[nPlayerTurn].countriesPlayerHas().size(); i++)
+            {
+              if(sUserInput.equals(players[nPlayerTurn].countriesPlayerHas().get(i).getName()))
+              {
+                players[nPlayerTurn].countriesPlayerHas().get(i).incArmies(nUserInput);
+                players[nPlayerTurn].loseArmies(nUserInput);
+              }
+            }
+
+            // Player take turn
+            if(nPlayerTurn < nNumPlayers-1)
+              nPlayerTurn++;
+            else
+              nPlayerTurn = 0;
+          }
+        }
+        else
+        {
+          System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
+          System.out.println("1. Country does NOT belong to this player...");
+          System.out.println("2. Incorrect input (Press 1 to list country your country and type the exact way...)\n");
+        }
+      }
+      else
+      {
+        // Player take turn
+        if(nPlayerTurn < nNumPlayers-1)
+          nPlayerTurn++;
+        else
+          nPlayerTurn = 0;
+      }
     }
 
 
