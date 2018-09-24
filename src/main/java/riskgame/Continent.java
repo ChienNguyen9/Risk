@@ -1,3 +1,5 @@
+package riskgame;
+
 import java.util.ArrayList;
 
 public class Continent {

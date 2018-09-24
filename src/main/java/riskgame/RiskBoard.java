@@ -1,5 +1,8 @@
+package riskgame;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class RiskBoard {
 	public RiskBoard() {}

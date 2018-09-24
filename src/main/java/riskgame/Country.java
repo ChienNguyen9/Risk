@@ -1,3 +1,5 @@
+package riskgame;
+
 import java.util.ArrayList;
 
 public class Country {
@@ -20,7 +22,7 @@ public class Country {
 	public void addBorders(ArrayList<Country> borderingCountry) {
 		this.borderingCountry = borderingCountry;
 	}
-//Set occupant of country when a player conquers it		
+//Set occupant of country when a player conquers it
 	public void setPlayer(Players player) {
 		occupied = true;
 		this.player = player;
@@ -55,4 +57,3 @@ public class Country {
 		return occupied;
 	}
 }
-	
