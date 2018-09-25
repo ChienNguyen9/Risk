@@ -1,5 +1,3 @@
-package riskgame;
-
 public class Card {
 
     private String armyType;

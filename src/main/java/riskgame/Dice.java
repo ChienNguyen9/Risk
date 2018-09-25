@@ -1,5 +1,3 @@
-package riskgame;
-
 import java.util.Random;
 
 public class Dice {
