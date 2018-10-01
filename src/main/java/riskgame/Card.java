@@ -1,22 +1,18 @@
 public class Card {
 
     private String armyType;
-    private Country country;
+    private String country;
 
-    public Card( String type, Country country ) {
+    public Card( String type, String country ) {
 		this.armyType = type;
 		this.country = country;
     }
-
-	public String getName() {
-		return country.getName() + ", " + armyType;
-	}
-
+    
     public String getType() {
 		return armyType;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
 		return country;
     }
 }

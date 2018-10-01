@@ -1,15 +1,28 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.io.File;
 
 //Create a deck with 42 cards
 //Ignores wild cards and secret mission cards
 public class Deck {
 
-	private String input;
-	private String name;
 	private String[] typesArray;
 	private ArrayList<Card> deck;
-	private ArrayList<Country> countries;
+	//private ArrayList<Country> countries;
+	public String[] countries = {"Alaska","Alberta","Central America","Eastern United States",
+								"Greenland","Northwest Territory","Ontario","Quebec","Western United States",
+								"Argentina","Brazil","Venezuela","Great Britain","Iceland","Northern Europe",
+								"Scandinavia","Southern Europe","Ukraine","Western Europe","Congo","East Africa",
+								"Egypt","Madagascar","North Africa","South Africa","Afghanistan","China","India",
+								"Irkutsk","Japan","Kamchatka","Middle East","Mongolia","Siam","Siberia","Ural",
+								"Yakutsk","Eastern Australia","Indonesia","LotR","New Guinea","Western Australia"};
 	private Card drawCard;
 
 
@@ -18,7 +31,7 @@ public class Deck {
 // 14 cards of each army type (Infantry, Cavalry, Artillery)
 //  1 of each country
 
-	public Deck (ArrayList<Country> countries) {
+	public Deck () {
 
 		//armyTypes of cards
 		typesArray = new String[]{ "Infantry", "Cavalry", "Artillery" };
@@ -27,9 +40,9 @@ public class Deck {
 
     //Fill deck with cards
     //14 of each army type, unique country on each card
-		for (int i=0; i<countries.size(); i++) {
-			deck.add(new Card(typesArray[i/14], countries.get(i)));
-			System.out.println("Added new card to deck: " + deck.get(i).getName());
+		for (int j=0; j<countries.length; j++) {
+			deck.add(new Card(typesArray[j/14], countries[j]));
+			//System.out.println("Added new card to deck: " + deck.get(i).getName());
 		}
 
     //Shuffle deck when all cards are added
@@ -51,7 +64,9 @@ public class Deck {
 	}
 
 	//Shuffle deck
-	public void shuffle() {
+	public boolean shuffle() {
 		Collections.shuffle(deck);
+		return true;
 	}
+
 }

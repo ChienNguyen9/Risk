@@ -75,6 +75,12 @@ public class Main {
     boolean bGameRunning = true;
     Scanner sc;
 
+    Deck deck = new Deck();
+    deck.shuffle();
+    if(deck.shuffle()){
+      System.out.println("The deck has been shuffled.");
+    }
+
     System.out.println("=============================================================");
     System.out.println("============ Welcome to Risk Board Game !!! =================");
     System.out.println("=============================================================");
