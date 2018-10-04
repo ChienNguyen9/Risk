@@ -125,6 +125,7 @@ public class Main {
       sName = sc.nextLine();
 
       bGameRunning = true;
+      /* PLAYER DOES NOT NEED COLOR
       do{
         if(nColor >= 1 && nColor <= sColorOption.length && sColorOption[nColor-1] != null) {
           bGameRunning = false;
@@ -138,9 +139,10 @@ public class Main {
           nColor = sc.nextInt();
         }
       }while(bGameRunning);
+      */
 
-      players[p] = new Players(sName, sColorOption[nColor-1], nArmies);
-      sColorOption[nColor-1] = null;
+      players[p] = new Players(sName, nArmies);
+      //sColorOption[nColor-1] = null;
 
       System.out.println();
       System.out.println("=============================================================\n\n");
@@ -149,9 +151,19 @@ public class Main {
     for(int p = 0; p < nNumPlayers; p++) {
       System.out.println("=============================================================");
       System.out.println("Player " + (p+1) + " is name: " + players[p].getName());
-      System.out.println("Player " + (p+1) + " is color: " + players[p].getColor());
-      System.out.println("=============================================================\n\n");
+      // System.out.println("Player " + (p+1) + " is color: " + players[p].getColor());
     }
+    // Let the player imbrace with their name
+    System.out.println("Press Enter key to continue...");
+    try
+    {
+        System.in.read();
+    }
+    catch(Exception e)
+    {
+      System.out.println(e.getMessage());
+    }
+    System.out.println("=============================================================\n\n");
 
     // Setup number 2 - whoever rolls the highest number gets to choose any territory
     System.out.println("===================== Whoever rolls the dice gets to pick first territory ========================================\n");
@@ -183,6 +195,7 @@ public class Main {
             nWinner++;
       }
 
+      // This will check if ONE player has the highest number
       if(nWinner == 1) {
         System.out.println("\n=============================================================");
         System.out.println("Player " + (nPlayerTurn+1) + " gets to pick territory first... ");
@@ -229,7 +242,7 @@ public class Main {
             bValidName = true; // Country has not been claim
 
         }
-
+        // If user has input a valid country and it is not occupy by any players. Then let the player take control of that country
         if(bValidName)
         {
           Board.setPlayer(sUserInput, players[nPlayerTurn]);
@@ -238,6 +251,7 @@ public class Main {
           players[nPlayerTurn].loseArmies(1);
 
           // Player take turn
+          // *** USE THIS TO ROTATE PLAYER TURNS ***
           if(nPlayerTurn < nNumPlayers-1)
             nPlayerTurn++;
           else
@@ -245,12 +259,13 @@ public class Main {
         }
         else
         {
+          // Player has input something that is incorrect. Don't exit the game, just continue looping...
           System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
           System.out.println("1. Country has been claim already...");
           System.out.println("2. Incorrect input (Press 1 to list country and type the exact way...)\n");
         }
       }
-      nCountriesClaim = Board.returnVacancy().size();
+      nCountriesClaim = Board.returnVacancy().size(); // Check if all the countries are claimed
     }
 
     // Set remaining troops that players have

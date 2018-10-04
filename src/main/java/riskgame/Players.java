@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class Players {
 
   private String sName;
-  private String sColor;
+  //private String sColor;
   private int nDice;
   private int nArmies;
 
@@ -12,9 +12,9 @@ public class Players {
   private HashMap<String, Country> hasCountry;
   private HashMap<String, Continent> hasContinent;
 
-  public Players(String name, String color, int nArmy) {
+  public Players(String name, int nArmy) {
 	  this.sName = name;
-	  this.sColor = color;
+	  //this.sColor = color;
     this.nDice = 0;
 	  this.numOfArmies = nArmy;
 	  hasCountry = new HashMap<String, Country>();
@@ -25,9 +25,9 @@ public class Players {
     return this.sName;
   }
 
-  public String getColor() {
-    return this.sColor;
-  }
+  //public String getColor() {
+  //  return this.sColor;
+  //}
 
   public int getNumOfArmies() {
 	  return numOfArmies;
@@ -44,7 +44,7 @@ public class Players {
   public void displayInfo() {
     System.out.println("=============================================================");
     System.out.println("Name: " + this.sName);
-    System.out.println("Color: " + this.sColor);
+    //System.out.println("Color: " + this.sColor);
     System.out.println("=============================================================");
   }
 
