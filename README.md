@@ -1,4 +1,5 @@
 # Risk Game Rules [![Build Status](https://travis-ci.org/OPzCatchMee/Risk.svg?branch=master)](https://travis-ci.org/OPzCatchMee/Risk)
+[![codecov](https://codecov.io/gh/OPzCatchMee/Risk/branch/master/graph/badge.svg)](https://codecov.io/gh/OPzCatchMee/Risk)
 
 # Game Board
 
