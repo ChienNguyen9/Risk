@@ -7,7 +7,7 @@ public class Card {
 		this.armyType = type;
 		this.country = country;
     }
-    
+
     public String getType() {
 		return armyType;
     }
