@@ -388,4 +388,112 @@ public class Main {
 
 
   }
+
+  public static void fortifyArmy(Players player, RiskBoard Board) {
+    boolean bFortify = true;
+    String sUserInputCountry;
+    String sUserInputAdjacent;
+    Scanner sc;
+    while(bFortify) {
+      int nUserInput;
+      boolean bValidName = false;
+      System.out.println(player.getName() + ", which country would you like to fortify?");
+      sc = new Scanner(System.in);
+      sUserInputCountry = sc.nextLine();
+
+      if(sUserInputCountry.equals("1"))
+      {
+        for(int i = 0; i < Board.returnVacancy().size(); i++) {
+            System.out.println(Board.returnVacancy().get(i).getName());
+        }
+      }
+
+      // Check if the country belongs to that player
+      for(int i = 0; i < player.countriesPlayerHas().size(); i++)
+      {
+        if(sUserInputCountry.equals(player.countriesPlayerHas().get(i).getName()))
+          bValidName = true;
+      }
+
+      if(!bValidName)
+      {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
+        System.out.println("1. Country does NOT belong to this player...");
+        System.out.println("2. Incorrect input (Press 1 to list country your country and type the exact way...)\n");
+      }
+
+      while(bValidName)
+      {
+        boolean bValidAdjacentName = false;
+        bFortify = false;
+        System.out.println("Which adjacent of " + sUserInputCountry + " do you want to fortify?");
+        sc = new Scanner(System.in);
+        sUserInputAdjacent = sc.nextLine();
+
+        if(sUserInputAdjacent.equals("1"))
+        {
+          for(int i = 0; i < Board.returnBorders(sUserInputCountry).size(); i++) {
+              System.out.println(Board.returnBorders(sUserInputCountry).get(i).getName());
+          }
+        }
+
+        // Check if the country is adjacent to each other
+        bValidAdjacentName = Board.verifyBorder(sUserInputCountry, sUserInputAdjacent);
+
+        if(!bValidAdjacentName)
+        {
+          System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
+          System.out.println("1. Country does NOT belong to this player...");
+          System.out.println("2. Incorrect input (Press 1 to list country that is adjacent to that country...)\n");
+        }
+
+        while(bValidAdjacentName) {
+          bValidName = false;
+
+          System.out.println("How many troops would you like to add " + sUserInputCountry + " to " + sUserInputAdjacent + "?");
+          sc = new Scanner(System.in);
+          nUserInput = sc.nextInt();
+
+          // Display how many armies does the country have
+          if(sUserInputCountry.equals("-1"))
+          {
+            for(int i = 0; i < player.countriesPlayerHas().size(); i++)
+            {
+              if(sUserInputCountry.equals(player.countriesPlayerHas().get(i).getName()))
+              {
+                player.countriesPlayerHas().get(i).decArmies(0);
+              }
+              if(sUserInputAdjacent.equals(player.countriesPlayerHas().get(i).getName()))
+              {
+                player.countriesPlayerHas().get(i).decArmies(0);
+              }
+            }
+          }
+
+          if(nUserInput <= (Board.returnNumOfArmies(sUserInputCountry)-1) && nUserInput >= 0)
+          {
+            bValidAdjacentName = false;
+            // Add troop to country
+            for(int i = 0; i < player.countriesPlayerHas().size(); i++)
+            {
+              if(sUserInputCountry.equals(player.countriesPlayerHas().get(i).getName()))
+              {
+                player.countriesPlayerHas().get(i).decArmies(nUserInput);
+              }
+              if(sUserInputAdjacent.equals(player.countriesPlayerHas().get(i).getName()))
+              {
+                player.countriesPlayerHas().get(i).incArmies(nUserInput);
+              }
+            }
+          }
+          else
+          {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
+            System.out.println("1. You have entered more than the country army limit...");
+            System.out.println("2. Incorrect input (Press -1 to list country army number...)\n");
+          }
+        }
+      }
+    }
+  }
 }
