@@ -4,6 +4,12 @@ import org.junit.jupiter.api.Test;
 public class TestDice {
 
   @Test
+  public void negativeDieThrown() {
+    Dice dice = new Dice();
+    dice.rollDice(-1);
+  }
+
+  @Test
   public void zeroDieThrown() {
     Dice dice = new Dice();
     dice.rollDice(0);
