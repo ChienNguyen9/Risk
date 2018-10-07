@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.beans.Transient;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,7 +17,7 @@ import java.io.File;
 //Ignores wild cards and secret mission cards
 public class TestDeck {
 
-	@Test
+	  @Test
     public void addInvalidArmyType() {
     Deck deck = new Deck();
      Card invalidCard = new Card("InvalidInfantry", "Alberta");
