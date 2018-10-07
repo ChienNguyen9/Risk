@@ -17,7 +17,7 @@ import java.io.File;
 //Ignores wild cards and secret mission cards
 public class TestDeck {
 
-    @Test
+	  @Test
     public void addInvalidArmyType() {
     Deck deck = new Deck();
      Card invalidCard = new Card("InvalidInfantry", "Alberta");
@@ -34,9 +34,9 @@ public class TestDeck {
     @Test
     public void addEmptyCard() {
         Deck deck = new Deck();
-        Card invalidCard = new Card();
+        Card invalidCard = new Card("", "");
         deck.add(invalidCard);
-     
+
     }
 
     @Test
@@ -44,15 +44,14 @@ public class TestDeck {
         Deck deck = new Deck();
         Card nullCard = new Card(null, null);
         deck.add(nullCard);
-     
+
     }
 
     @Test
     public void testShuffle() {
         Deck deck = new Deck();
         deck.shuffle();
-     
-    }
 
+    }
 
 }
