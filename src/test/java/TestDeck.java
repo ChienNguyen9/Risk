@@ -16,6 +16,9 @@ import java.io.File;
 //Ignores wild cards and secret mission cards
 public class TestDeck {
 
-
+	@Test
+  public void unValidArmyCountry() {
+    //Deck Deck = new Card();
+  }
 
 }
