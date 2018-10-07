@@ -17,8 +17,40 @@ import java.io.File;
 public class TestDeck {
 
 	@Test
-  public void unValidArmyCountry() {
-    //Deck Deck = new Card();
-  }
+    public void addInvalidArmyType() {
+    Deck deck = new Deck();
+     Card invalidCard = new Card("InvalidInfantry", "Alberta");
+     deck.add(invalidCard);
+    }
+
+    @Test
+    public void addInvalidCountry() {
+        Deck deck = new Deck();
+        Card invalidCard = new Card("Infantry", "InvalidAlberta");
+        deck.add(invalidCard);
+    }
+
+    @Test
+    public void addEmptyCard() {
+        Deck deck = new Deck();
+        Card invalidCard = new Card("", "");
+        deck.add(invalidCard);
+
+    }
+
+    @Test
+    public void addNullCard() {
+        Deck deck = new Deck();
+        Card nullCard = new Card(null, null);
+        deck.add(nullCard);
+
+    }
+
+    @Test
+    public void testShuffle() {
+        Deck deck = new Deck();
+        deck.shuffle();
+
+    }
 
 }
