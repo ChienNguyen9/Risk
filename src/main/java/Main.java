@@ -389,6 +389,121 @@ public class Main {
 
   }
 
+public static void attackTerritory(Players player, RiskBoard Board) {
+		    boolean attacking = true;
+		    boolean validBorderCountry = false;
+		    boolean isOpponent = false;
+		    boolean validAtkRoll = false;
+		    boolean validDefRoll = false;
+		    String atkCountryInput;
+		    String defCountryInput;
+		    String atkCountry;
+		    String defCountry;
+		    String a,b,c;
+		    String defPlayer;
+		    int atkArmyLoss = 0;
+		    int defArmyLoss = 0;
+		    int nAtkDice;
+		    int nDefDice;
+		    int nAtkRolls;
+		    int nDefRolls;
+		    while(attacking) {
+		    	boolean bValidName = false;
+		    	System.out.println("\"Player : " + player.getName() + ", From which of your countries would you like to attack from?");
+		    	System.out.println("\n1. list countries you currently occupy");
+		    	sc = new Scanner(System.in);
+		    	atkCountryInput = sc.nextLine();
+		    	if(atkCountryInput.equals("1")) {
+		    		for(int i = 0;i < player.countriesPlayerHas().size();i++) {
+		    			System.out.println("\n" + player.countriesPlayerHas().get(i).getName());
+		    		}
+		    	}
+		    	
+		    	for(int i = 0;i < player.countriesPlayerHas();size();i++) {
+		    		if(atkCountryInput.equals(player.countriesPlayerHas().get(i).getName()))
+		    			bValidName = true;
+		    			atkCountry = Board.returnNameOfCountry(atkCountryInput)
+		    	}
+		    	
+		    	if(!bValidName) {
+		    		System.out.println("\nYOU DO NOT OWN THIS COUNTRY, PLEASE PRESS 1 TO LIST YOUR COUNTRIES");
+		    	}
+		    	
+				while(bValidName) {
+					validBorderCountry = false;
+				
+					//attacking = false;
+		    		System.out.println("\nWHICH NEARBY COUNTRY WOULD YOU LIKE TO ATTACK FROM " + atkCountry);
+		    		System.out.println("\nPRESS 1 TO LIST COUNTRIES NEARBY " + atkCountry);
+		    		sc = new Scanner(System.in);
+					defCountryInput = sc.nextLine();
+		    		if(defCountryInput.equals("1")) {
+		    			for(int j = 0 ; j < Board.returnBorders(defCountry).size(); j++) {
+		    				System.out.println("\n" + Board.returnBorders(defCountryInput).get(j).getName());
+		    			}
+		    		}
+				}
+		    		
+				validBorderCountry = Board.verifyBorder(atkCountry, defCountryInput);
+		    		
+		    	if(!validBorderCountry) {
+		    		System.out.println("THIS COUNTRY DOES NOT BORDERS " + atkCountry + "OR CHECK SPELLING OF COUNTRY")
+		    	}
+		    	
+		    	while(validBorderCountry) {
+		    		bValidName = false;
+		    		defCountry = Board.returnNameOfCountry(defCountryInput);
+		    		defPlayer = Board.returnPlayer(defCountry);
+		    		if(player.equals(defCountry.getPlayer())) {
+		    			System.out.println("\nYOU CAN NOT ATTACK YOUR OWN COUNTRY");
+		    		}
+		    		else
+		    			isOpponent = true;
+		    	}
+		    	while(isOpponent) {
+		    		dice = New Dice();
+		    		System.out.println("\n" + player + ", HOW MANY DICES WOULD YOU LIKE TO ROLL");
+		    		sc new Scanner(System.in);
+		    		nUserInput = sc.nextInt();
+		    		try{
+		    			if(nUserInput < 1 || nUserInput >= Board.returnNumOfArmies(atkCountry)) {
+		    				throw new IllegalArgumentException();
+		    			}
+		    			nAtkDice = nUserInput;
+	    				validAtkRoll = true;
+		    		}catch (IllegalArgumentException e) {
+		    			System.out.println("\nYOU DO NOT HAVE THIS MANY ARMY IN THIS COUNTRY")
+		    		}catch (NumberFormatException e) {
+		    			System.out.println("\nNOT A VALID INPUT");
+		    		}
+		    		while(validAtkRoll) {
+		    			System.out.println("\n" + defPlayer + ", HOW MANY DICES WOULD YOU LIKE TO ROLL");
+		    			sc = new Scanner(System.in);
+		    			nUserInput = sc.nextInt();
+		    			try {
+		    				if(nUserInput < 1 || nUserInput >= Board.returnNumOfArmies(defCountry)) {
+		    					throw new IllegalArgumentException();
+		    				}
+		    				nDefDice = nUserInput;
+		    				validDefRoll = true;
+		    			}catch(IllegaArgumentException e) {
+		    				System.out.println("\nYOU DO NOT HAVE THIS MANY ARMY IN THIS COUNTRY");
+		    			}catch(NumberFormatException e) {
+		    				System.out.println("\nNOT A VALID INPUT");
+		    			}
+		    			if(validDefRoll) {
+		    				nAtkRolls = dice.rollDice(nAtkDice);
+		    				nDefRolls = dice.rollDice(nDefDice);
+		    				if(nAtkRolls > nDefRolls) {
+		    					defArmyLoss
+		    				}
+		    			}
+		    		}
+		    		
+		    	}
+		   }
+}
+
   public static void fortifyArmy(Players player, RiskBoard Board) {
     boolean bFortify = true;
     String sUserInputCountry;
