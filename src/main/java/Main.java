@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.lang.StringBuilder;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Main {
 
@@ -338,174 +340,436 @@ public class Main {
     }
 
 
-/*
+
     // Game Starts
     bGameRunning = true;
     int nTurn = 0;
     while(bGameRunning) {
       // Check if any player has conquers all the country
 
-      switch(nTurn) {
+      switch(nPlayerTurn) {
         case 1:
         // Getting and placing new armies.
         // Attacking.
+        purchaseCredits(players[0]);
+        purchaseCards(players[0], Board);
+        transferCredits(players[0], Board, nNumPlayers, players);
+        attackTerritory(players[0], Board, dice, players);
         // Fortifying your position.
         break;
 
         case 2:
         // Getting and placing new armies.
         // Attacking.
+        	attackTerritory(players[1], Board, dice, players);
         // Fortifying your position.
         break;
 
         case 3:
         // Getting and placing new armies.
         // Attacking.
+        	attackTerritory(players[2], Board, dice, players);
         // Fortifying your position.
         break;
 
         case 4:
         // Getting and placing new armies.
         // Attacking.
+        	attackTerritory(players[3], Board, dice, players);
         // Fortifying your position.
         break;
 
         case 5:
         // Getting and placing new armies.
         // Attacking.
+        	attackTerritory(players[4], Board, dice, players);
         // Fortifying your position.
         break;
 
         case 6:
         // Getting and placing new armies.
         // Attacking.
+        	attackTerritory(players[5], Board, dice, players);
         // Fortifying your position.
         break;
       }
-      nTurn++;  // Next player
+      // Player take turn
+      if(nPlayerTurn < nNumPlayers-1)
+        nPlayerTurn++;
+      else
+        nPlayerTurn = 0;
     }
-*/
+
 
 
   }
-
-public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
-		    boolean attacking = true;
-		    boolean validBorderCountry = false;
-		    boolean isOpponent = false;
-		    boolean validAtkRoll = false;
-		    boolean validDefRoll = false;
-		    String atkCountryInput = "";
-		    String defCountryInput = "";
-		    String atkCountry = "";
-		    String defCountry = "";
-		    String a,b,c;
-		    String defPlayer = "";
-		    int atkArmyLoss = 0;
-		    int defArmyLoss = 0;
-		    int nAtkDice = 0;
-		    int nDefDice = 0;
-		    int nAtkRolls = 0;
-		    int nDefRolls = 0;
-        Scanner sc;
-        int nUserInput;
-		    while(attacking) {
-		    	boolean bValidName = false;
-		    	System.out.println("\"Player : " + player.getName() + ", From which of your countries would you like to attack from?");
-		    	System.out.println("\n1. list countries you currently occupy");
-		    	sc = new Scanner(System.in);
-		    	atkCountryInput = sc.nextLine();
-		    	if(atkCountryInput.equals("1")) {
-		    		for(int i = 0;i < player.countriesPlayerHas().size();i++) {
-		    			System.out.println("\n" + player.countriesPlayerHas().get(i).getName());
-		    		}
-		    	}
-
-		    	for(int i = 0;i < player.countriesPlayerHas().size();i++) {
-		    		if(atkCountryInput.equals(player.countriesPlayerHas().get(i).getName()))
-            {
-		    			bValidName = true;
-		    			atkCountry = atkCountryInput;
-            }
-          }
-
-		    	if(!bValidName) {
-		    		System.out.println("\nYOU DO NOT OWN THIS COUNTRY, PLEASE PRESS 1 TO LIST YOUR COUNTRIES");
-		    	}
-
-				while(bValidName) {
-					validBorderCountry = false;
-
-					//attacking = false;
-		    		System.out.println("\nWHICH NEARBY COUNTRY WOULD YOU LIKE TO ATTACK FROM " + atkCountry);
-		    		System.out.println("\nPRESS 1 TO LIST COUNTRIES NEARBY " + atkCountry);
-		    		sc = new Scanner(System.in);
-					defCountryInput = sc.nextLine();
-		    		if(defCountryInput.equals("1")) {
-		    			for(int j = 0 ; j < Board.returnBorders(defCountry).size(); j++) {
-		    				System.out.println("\n" + Board.returnBorders(defCountryInput).get(j).getName());
-		    			}
-		    		}
+public static void purchaseCredits(Players player) {
+	boolean purchasing = true;
+	Scanner sc;
+	String sUserInput;
+	int nUserInput;
+	while(purchasing) {
+		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase credits? (y/n)");
+		sc = new Scanner(System.in);
+		sUserInput = sc.nextLine();
+		if(sUserInput.equals("y")) {
+			System.out.println("How many would you like to buy? Price rate: $1 = 1 credit");
+			sc = new Scanner(System.in);
+			do {
+				while(!sc.hasNextInt()) {
+					System.out.println("Transaction error: That is not a valid number");
+					System.out.println("Please enter the number of credits you would like to buy");
+					sc.next();
 				}
-
-				validBorderCountry = Board.verifyBorder(atkCountry, defCountryInput);
-
-		    	if(!validBorderCountry) {
-		    		System.out.println("THIS COUNTRY DOES NOT BORDERS " + atkCountry + "OR CHECK SPELLING OF COUNTRY");
-		    	}
-
-		    	while(validBorderCountry) {
-		    		bValidName = false;
-		    		defCountry = defCountryInput;
-		    		defPlayer = defCountry;
-		    		if((player.getName()).equals((Board.returnPlayer(defCountry)).getName())) {
-		    			System.out.println("\nYOU CAN NOT ATTACK YOUR OWN COUNTRY");
-		    		}
-		    		else
-		    			isOpponent = true;
-		    	}
-		    	while(isOpponent) {
-		    		System.out.println("\n" + player + ", HOW MANY DICES WOULD YOU LIKE TO ROLL");
-		    		sc = new Scanner(System.in);
-		    		nUserInput = sc.nextInt();
-		    		try{
-		    			if(nUserInput < 1 || nUserInput >= Board.returnNumOfArmies(atkCountry)) {
-		    				throw new IllegalArgumentException();
-		    			}
-		    			nAtkDice = nUserInput;
-	    				validAtkRoll = true;
-		    		}catch (IllegalArgumentException e) {
-		    			System.out.println("\nYOU DO NOT HAVE THIS MANY ARMY IN THIS COUNTRY");
-		    		//}catch (NumberFormatException e) {
-		    		//	System.out.println("\nNOT A VALID INPUT");
-		    		}
-		    		while(validAtkRoll) {
-		    			System.out.println("\n" + defPlayer + ", HOW MANY DICES WOULD YOU LIKE TO ROLL");
-		    			sc = new Scanner(System.in);
-		    			nUserInput = sc.nextInt();
-		    			try {
-		    				if(nUserInput < 1 || nUserInput >= Board.returnNumOfArmies(defCountry)) {
-		    					throw new IllegalArgumentException();
-		    				}
-		    				nDefDice = nUserInput;
-		    				validDefRoll = true;
-		    			}catch(IllegalArgumentException e) {
-		    				System.out.println("\nYOU DO NOT HAVE THIS MANY ARMY IN THIS COUNTRY");
-		    			//}catch(NumberFormatException e) {
-		    			//	System.out.println("\nNOT A VALID INPUT");
-		    			}
-		    			if(validDefRoll) {
-		    				nAtkRolls = dice.rollDice(nAtkDice);
-		    				nDefRolls = dice.rollDice(nDefDice);
-		    				//if(nAtkRolls > nDefRolls) {
-		    				//	defArmyLoss
-		    				//}
-		    			}
-		    		}
-
-		    	}
-		   }
+				nUserInput = sc.nextInt();
+			}while(nUserInput <= 0);
+				player.gainCredits(nUserInput);
+		}
+		if(sUserInput.equals("n")) {
+			return;
+		}
+	}
 }
+public static void purchaseCards(Players player, RiskBoard Board) {
+	boolean purchasing = true;
+	Scanner sc;
+	String countryInput;
+	String armyInput;
+	Card pCard;
+	boolean validName = false;
+	boolean purchased = false;
+	String sUserInput;
+	int infantryCost = 1;
+	int cavalryCost = 5;
+	int artilleryCost = 10;
+	while(purchasing) {
+		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase a territory card? (y/n) ");
+		System.out.println("1. List available credits ");
+		sc = new Scanner(System.in);
+		sUserInput = sc.nextLine();
+		if(sUserInput.equals("1")) {
+			System.out.println("Total available credits: " + player.getNumOfCredits());
+		}
+		if(sUserInput.equals("y")) {
+			//Do you have to own the country to purchase a card for?
+			
+			System.out.println("\nWhich country would you like this territory card for?");
+			sc = new Scanner(System.in);
+			countryInput = sc.nextLine();
+			//Checks if input is a valid country in the board
+	        for(int i = 0; i < Board.returnCountries().size(); i++) {
+	            if(countryInput.equals(Board.returnCountries().get(i).getName())){
+	            	validName = true;
+	            }
+	        }
+			if(!validName) {
+				System.out.println("\nNot a valid country");
+			}
+			while(validName) {
+				System.out.println("\nWould you like Infantry($1), Cavalry($5), or Artillery($10) army type for this territory card?");
+				sc = new Scanner(System.in);
+				armyInput = sc.nextLine();
+				//checks if player has enough credits to buy for each army type
+				if(armyInput.equals("Infantry") || armyInput.equals("Cavalry") || armyInput.equals("Artillery")) {
+					if(armyInput.equals("Infantry")) {
+						if(player.getNumOfCredits() < infantryCost) {
+							System.out.println("\nTransaction error: You do not have enough credits to purchase this");
+							break;
+						}
+					}
+					if(armyInput.equals("Cavalry")) {
+						if(player.getNumOfCredits() < cavalryCost) {
+							System.out.println("\nTransaction error: You do not have enough credits to purchase this");
+							break;
+						}
+					}
+					if(armyInput.equals("Artillery")) {
+						if(player.getNumOfCredits() < artilleryCost) {
+							System.out.println("\nTransaction error: You do not have enough credits to purchase this");
+							break;
+						}
+					}
+					//Creates a new card if player has enough credits
+					pCard = new Card(armyInput, countryInput);
+					player.getPlayersHand().add(pCard);
+					purchased = true;
+				}
+				else {
+					System.out.println("\nNot a valid army type");
+				}
+				if(purchased) {
+					validName = false;
+					for(int i = 0 ;i < player.getPlayersHand().size(); i ++) {
+						System.out.println("\nPlayer: " + player.getName() + " has purchased a territory card for " + player.getPlayersHand().get(i).getCountry() + ", type: " + player.getPlayersHand().get(i).getType());
+					}
+					if(armyInput.equals("Infantry")){
+							player.loseCredits(1);
+					}
+					else if(armyInput.equals("Cavalry")) {
+						player.loseCredits(5);
+					}
+					else if(armyInput.equals("Artillery")) {
+						player.loseCredits(10);
+					}
+					else
+						player.loseCredits(0);
+				}
+			}
+		}
+		if(sUserInput.equals("n")) {
+			return;
+		}
+	}
+}
+public static void transferCredits(Players player, RiskBoard Board, int nNumPlayers, Players[] players) {
+	boolean transfer = true;
+	boolean canTransfer = false;
+	Scanner sc;
+	String sUserInput;
+	String nameInput;
+	int nCreditsInput;
+	while(transfer) {
+		System.out.println("\nPlayer: " + player.getName() + " would you like to transfer any of your credits to another player? (y/n)");
+		sc = new Scanner(System.in);
+		sUserInput = sc.nextLine();
+		if(sUserInput.equals("y")) {
+			System.out.println("Who would you like to transfer credits to?");
+			System.out.println("1. List of players");
+			sc = new Scanner(System.in);
+			nameInput = sc.nextLine();
+			if(nameInput.equals("1")) {
+				for(int i = 0; i < nNumPlayers ; i++) {
+					System.out.println(players[i].getName());
+				}
+			}
+			//Checks if the input was the same as the current player
+			if(nameInput.equals(player.getName())) {
+				System.out.println("\nWhy would you transfer to yourself......");
+				continue;
+			}
+			for(int i = 0; i < nNumPlayers; i++) {
+				if(nameInput.equals(players[i].getName())) {
+					System.out.println("\nHow many credits would you like to transfer to " + players[i].getName());
+					sc = new Scanner(System.in);
+					do {
+						while(!sc.hasNextInt()) {
+							System.out.println("\nTransfer error: Not a valid number input");
+							System.out.println("Please enter a valid number of credits you would like to transfer");
+							sc.next();
+						}
+						nCreditsInput = sc.nextInt();
+					}while(nCreditsInput <= 0);
+					System.out.println("\nTransferring credits..........");
+						//Checks if player has enough credits to transfer
+						if(nCreditsInput > player.getNumOfCredits()) {
+							System.out.println("\nYou do not have enough credits to transfer");
+							continue;
+						}
+						System.out.println("\nPlayer: " + player.getName() + " has transferred " + nCreditsInput + " credits to Player: " + players[i].getName());
+						player.loseCredits(nCreditsInput);
+						players[i].gainCredits(nCreditsInput);
+					}
+				}
+		}
+		if(sUserInput.equals("n")) {
+			return;
+		}
+	}
+}
+public static void attackTerritory(Players player, RiskBoard Board, Dice dice, Players[] players) {
+	boolean attacking = true;
+    boolean validBorderCountry = false;
+    boolean isOpponent = false;
+    boolean validAtkRoll = false;
+    boolean validDefRoll = false;
+	boolean bValidName = false;
+    String atkCountryInput = "";
+    String defCountryInput = "";
+    Country atkCountry;
+    Country defCountry;
+    String a,b,c;
+    int atkArmyLoss = 0;
+    int defArmyLoss = 0;
+    int lowDice = 0;
+    int nAtkDice = 0;
+    int nDefDice = 0;
+    Integer [] nAtkRolls;
+    Integer [] nDefRolls;
+    Scanner sc;
+    int nUserInput;
+    System.out.println("\nPlayer: " + player.getName() + " will now begin their Attack phase.");
+    while(attacking) {
+    	System.out.println("\nPlayer: " + player.getName() + ", From which of your countries would you like to attack from?");
+    	System.out.println("1. list countries you currently occupy");
+    	sc = new Scanner(System.in);
+    	atkCountryInput = sc.nextLine();
+    	if(atkCountryInput.equals("1")) {
+    		//Displays list of countries that belongs to player
+    		for(int i = 0;i < player.countriesPlayerHas().size();i++) {
+    			System.out.println(player.countriesPlayerHas().get(i).getName());
+    		}
+    	}
+    	
+    	for(int i = 0;i < player.countriesPlayerHas().size();i++) {
+    		//Checks if country belongs to player
+    		if(atkCountryInput.equals(player.countriesPlayerHas().get(i).getName())) {
+    				bValidName = true;
+    		}
+    	}
+
+    	if(!bValidName) {
+    		System.out.println("\nYou do not own this country, or press 1 to list your countries");
+    	}
+
+		while(bValidName) {
+    		System.out.println("\nWhich nearby country would you like to attack from " + atkCountryInput);
+    		System.out.println("1. List countries nearby: " + atkCountryInput);
+    		sc = new Scanner(System.in);
+			defCountryInput = sc.nextLine();
+    		if(defCountryInput.equals("1")) {
+    			//Displays list of countries adjacent to country player is attacking from
+    			for(int j = 0 ; j < Board.returnBorders(atkCountryInput).size(); j++) {
+    				System.out.println(Board.returnBorders(atkCountryInput).get(j).getName());
+    			}
+    		}
+    		//If countries are adjacent to each other, returns true
+    		validBorderCountry = Board.verifyBorder(atkCountryInput, defCountryInput);
+    		if(validBorderCountry) {
+    			 for(int i = 0; i < player.countriesPlayerHas().size();i++) {
+    				 //checks whether the adjacent country also belongs to the player or not
+ 			    	if(defCountryInput.equals(player.countriesPlayerHas().get(i).getName()) || defCountryInput.equals(atkCountryInput)) {
+ 			    		System.out.println("\nYou can not attack your own country");
+ 			    		break;
+ 			    	}
+ 			    	else {
+ 			    		isOpponent = true;
+ 			    	}
+    			 }
+    		}
+
+	    	if(!validBorderCountry) {
+	    		System.out.println("\nThis country is not bordering " + atkCountryInput + " or check spelling of country");
+	    	}
+	    	
+	    	while(isOpponent) {
+	    		System.out.println("\nCommencing Attack!");
+	    		System.out.println("Player: " + player.getName() + "'s armies from " + atkCountryInput + " will be attacking Player: " + Board.returnPlayer(defCountryInput).getName() + "'s armies in " + defCountryInput);
+	    		System.out.println("\n" + player.getName() + ", How many dices would you like to roll to attack?");
+    			sc = new Scanner(System.in);
+    			do {
+    				while(!sc.hasNextInt()) {
+    					System.out.println("\nNot a valid number to roll");
+    					System.out.println("Please enter a number of dices you want to roll...");
+    					sc.next();
+    				}
+    				nUserInput = sc.nextInt();
+    			}while(nUserInput <= 0);
+    				System.out.println("\nPlayer: " + player.getName() + " will be rolling " + nUserInput + " dices");
+    			//Checks if input is less than or equal to number of armies in country
+    			if(nUserInput >= 1 && nUserInput <= Board.returnNumOfArmies(atkCountryInput)) {
+    						nAtkDice = nUserInput;
+    						validAtkRoll = true;
+    			}
+    			else {
+    				System.out.println("\nYou do not have that many army in this country");
+    			}
+	    		while(validAtkRoll) {
+	    			System.out.println("\n" + Board.returnPlayer(defCountryInput).getName() + " , how many dices would you like to roll to defend?");
+	    			sc = new Scanner(System.in);
+	    			do {
+	    				while(!sc.hasNextInt()) {
+	    					System.out.println("\nNot a valid number to roll");
+	    					System.out.println("Please enter a number of dices you want to roll...");
+	    					sc.next();
+	    				}
+	    				nUserInput = sc.nextInt();
+	    			}while(nUserInput <= 0);
+	    				System.out.println("\nPlayer: " + Board.returnPlayer(defCountryInput).getName() + " will be rolling " + nUserInput + " dices");
+	    				if(nUserInput >= 1 && nUserInput <= Board.returnNumOfArmies(defCountryInput)) {
+	    					nDefDice = nUserInput;
+	    					validDefRoll = true;
+	    				}
+	    			else {
+	    				System.out.println("\nYou do not have that many army in this Country");
+	    			}
+	    			if(validDefRoll) {
+	    				//Sets number of dice duels to the number of rolls of the player with the least
+	    				if(Integer.compare(nAtkDice, nDefDice) == 1) {
+	    					lowDice = nDefDice;
+	    				}
+	    				else if(Integer.compare(nAtkDice, nDefDice) == -1) {
+	    					lowDice = nAtkDice;
+	    				}
+	    				else if(Integer.compare(nAtkDice,  nDefDice) == 0) {
+	    					lowDice = nAtkDice;
+	    				}
+	    				nAtkRolls = new Integer[nAtkDice];
+	    				for(int i = 0; i < nAtkRolls.length; i++) {
+	    					nAtkRolls[i] = dice.roll();
+	    					//System.out.println(nAtkRolls[i]);
+	    				}
+	    				Arrays.sort(nAtkRolls, Collections.reverseOrder());
+	    				nDefRolls = new Integer[nDefDice];
+	    				for(int i = 0; i < nDefRolls.length; i++) {
+	    					nDefRolls[i] = dice.roll();
+	    					//System.out.println(nDefRolls[i]);
+	    				}
+	    				Arrays.sort(nDefRolls,Collections.reverseOrder());
+	    				for(int i = 0; i < lowDice ; i++) {
+	    					System.out.println("\nNext Highest Pair Roll: ");
+		    				if(nAtkRolls[i] > nDefRolls[i]) {
+		    					defArmyLoss++;
+		    					System.out.println(player.getName() + " rolled " + nAtkRolls[i]);
+		    					System.out.println(Board.returnPlayer(defCountryInput).getName() + " rolled " + nDefRolls[i]);
+		    				}
+		    				else if(nAtkRolls[i] < nDefRolls[i]) {
+		    					atkArmyLoss++;
+		    					System.out.println(player.getName() + " rolled " + nAtkRolls[i]);
+		    					System.out.println(Board.returnPlayer(defCountryInput).getName() + " rolled " + nDefRolls[i]);
+		    				}
+		    				else if(nAtkRolls[i] == nDefRolls[i]) {
+	    						System.out.println(player.getName() + " rolled " + nAtkRolls[i]);
+		    					System.out.println(Board.returnPlayer(defCountryInput).getName() + " rolled " + nDefRolls[i]);
+		    					System.out.println("Dice roll tie!");
+		    					if(nAtkRolls[i+1] > nDefRolls[i+1]) {
+			    					System.out.println("\nNext Highest Pair Roll: ");
+		    						defArmyLoss++;
+			    					System.out.println(player.getName() + " rolled " + nAtkRolls[i]);
+			    					System.out.println(Board.returnPlayer(defCountryInput).getName() + " rolled " + nDefRolls[i]);    					
+		    					}
+		    					else if(nAtkRolls[i+1] < nDefRolls[i+1]) {
+		    						System.out.println("\nNext Highest Pair Roll: ");
+			    					atkArmyLoss++;
+			    					System.out.println(player.getName() + " rolled " + nAtkRolls[i]);
+			    					System.out.println(Board.returnPlayer(defCountryInput).getName() + " rolled " + nDefRolls[i]);
+			    				}
+		    				}
+	    				}
+	    				System.out.println("\nBattle Report: ");
+	    				Board.returnNameOfCountry(atkCountryInput).decArmies(atkArmyLoss);
+	    				Board.returnNameOfCountry(defCountryInput).decArmies(defArmyLoss);
+	    				
+	    				if(Board.returnNameOfCountry(defCountryInput).getArmies() < 1) {
+	    					System.out.println("\n\n\n\n\n\n\n\n\nGame Announcement: Player: " + player.getName() + " has eliminated all of Player:" + Board.returnPlayer(defCountryInput).getName() + "'s armies in " + Board.returnNameOfCountry(defCountryInput).getName() + " and now has posession of the country!");
+	    					Board.returnPlayer(defCountryInput).lostCountry(defCountryInput);
+	    					player.gainCountry(Board.returnNameOfCountry(defCountryInput));
+	    					
+	    					if(Board.returnPlayer(defCountryInput).countriesPlayerHas().size() == 0) {
+	    						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\nGame Announcement: Player: " + Board.returnPlayer(defCountryInput).getName() + " has lost all of their territories and will be removed from the game!");
+	    					}
+	    					
+	    				}
+	    				
+	    				return;
+
+		    	}
+		    }
+	    }	
+	}
+}
+}
+		
+
 
   public static void fortifyArmy(Players player, RiskBoard Board) {
     boolean bFortify = true;

@@ -45,7 +45,7 @@ public class Country {
 //When a player loses armies in a country
 	public void decArmies(int numberOfArmies) {
 		armies = armies - numberOfArmies;
-		System.out.println(player.getName() + " has lost " + numberOfArmies + " armies in " + countryName + ".");
+		System.out.println(player.getName() + " has lost " + numberOfArmies + " army(s) in " + countryName + ".");
 	}
 // list of bordering countries
 	public ArrayList<Country> getBorders(){
