@@ -495,7 +495,7 @@ public class Main {
       attackTerritory(players[5], Board, dice, players);
       break;
 
-      Default:
+      default:
       // Getting and placing new armies.
       // Attacking.
       attackTerritory(players[5], Board, dice, players);
