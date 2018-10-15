@@ -1,5 +1,19 @@
 # Risk Game Rules [![Build Status](https://travis-ci.org/OPzCatchMee/Risk.svg?branch=master)](https://travis-ci.org/OPzCatchMee/Risk) [![codecov](https://codecov.io/gh/OPzCatchMee/Risk/branch/master/graph/badge.svg)](https://codecov.io/gh/OPzCatchMee/Risk)
 
+# How to compile Game
+javac -cp ".;lib/twitter4j-core-4.0.7.jar" \*.java
+
+java -cp ".;lib/twitter4j-core-4.0.7.jar" Main
+
+# Twitter Account
+https://twitter.com/ChienNg53396496
+
+# TODO
+Chance - Notify players if their territories are under attack. (Remember the Observer Pattern)
+Trong - Players can purchase in-game credit. They can use the credit to buy cards, buy undo actions, or transfer the credits to another player.
+Chien - Post the number of territories conquered by each player on Twitter after each turn and at the end of the game.
+
+
 # Game Board
 
 The game board is a map of 6 continents divided into 42 territories.
