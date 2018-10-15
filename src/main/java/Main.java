@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.lang.StringBuilder;
 
+import twitter4j.TwitterException;
+
 public class Main {
 
-  public static void main(String[] args){
+  public static void main(String[] args) throws TwitterException, IOException {
 	  String countryFile = "Countries.txt";
 	  String continentFile = "Continents.txt";
 	  String borderingCountryFile  = "BorderingCountries.txt";
@@ -21,6 +23,9 @@ public class Main {
 	  String[] borderingCountries;
 	  RiskBoard Board;
 	  boolean createdBoard;
+
+    PostTwitter postTwitter = new PostTwitter();
+
 
 	  createdBoard = false;
 	  Board = new RiskBoard();
@@ -218,7 +223,7 @@ public class Main {
     // Set up - Claim territories
     int nCountriesClaim = Board.returnCountries().size();
     boolean bValidName = false;
-    while(nCountriesClaim >= 1) {
+    while(nCountriesClaim >= 39) {
       System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
       System.out.println("1. List all the countries...");
 
@@ -338,53 +343,162 @@ public class Main {
     }
 
 
-/*
+
     // Game Starts
+    boolean bPlayerTurn = false;
     bGameRunning = true;
     int nTurn = 0;
+    int nNumberOfTurns = 0;
     while(bGameRunning) {
+      bPlayerTurn = true;
       // Check if any player has conquers all the country
 
-      switch(nTurn) {
+      // Twitter Message
+      nNumberOfTurns++;
+      try{
+        postTwitter.TweetOnTwitter(postMessage(1, nNumberOfTurns, players, nNumPlayers, postTwitter));
+      }catch (TwitterException e) {
+        System.out.println("Did not post to twitter.");
+      }
+
+      switch(nPlayerTurn) {
+        case 0:
+          while(bPlayerTurn)
+          {
+            System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+            System.out.println("Press \'1\' to fortify");
+            System.out.println("Press \'-1\' to end turn");
+            System.out.println("What would you like to do?");
+            sc = new Scanner(System.in);
+            sUserInput = sc.nextLine();
+            // Getting and placing new armies.
+            // Attacking.
+            //attackTerritory(players[nPlayerTurn], Board, dice);
+            // Fortifying your position.
+            if(sUserInput.equals("1"))
+              fortifyArmy(players[nPlayerTurn], Board);
+            if(sUserInput.equals("-1"))
+              bPlayerTurn = false;
+          }
+
+        break;
+
         case 1:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
+        while(bPlayerTurn)
+        {
+          System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+          System.out.println("Press \'1\' to fortify");
+          System.out.println("Press \'-1\' to end turn");
+          System.out.println("What would you like to do?");
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+          // Getting and placing new armies.
+          // Attacking.
+          //attackTerritory(players[nPlayerTurn], Board, dice);
+          // Fortifying your position.
+          if(sUserInput.equals("1"))
+            fortifyArmy(players[nPlayerTurn], Board);
+          if(sUserInput.equals("-1"))
+            bPlayerTurn = false;
+        }
         break;
 
         case 2:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
+        while(bPlayerTurn)
+        {
+          System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+          System.out.println("Press \'1\' to fortify");
+          System.out.println("Press \'-1\' to end turn");
+          System.out.println("What would you like to do?");
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+          // Getting and placing new armies.
+          // Attacking.
+          //attackTerritory(players[nPlayerTurn], Board, dice);
+          // Fortifying your position.
+          if(sUserInput.equals("1"))
+            fortifyArmy(players[nPlayerTurn], Board);
+          if(sUserInput.equals("-1"))
+            bPlayerTurn = false;
+        }
         break;
 
         case 3:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
+        while(bPlayerTurn)
+        {
+          System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+          System.out.println("Press \'1\' to fortify");
+          System.out.println("Press \'-1\' to end turn");
+          System.out.println("What would you like to do?");
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+          // Getting and placing new armies.
+          // Attacking.
+          //attackTerritory(players[nPlayerTurn], Board, dice);
+          // Fortifying your position.
+          if(sUserInput.equals("1"))
+            fortifyArmy(players[nPlayerTurn], Board);
+          if(sUserInput.equals("-1"))
+            bPlayerTurn = false;
+        }
         break;
 
         case 4:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
+        while(bPlayerTurn)
+        {
+          System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+          System.out.println("Press \'1\' to fortify");
+          System.out.println("Press \'-1\' to end turn");
+          System.out.println("What would you like to do?");
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+          // Getting and placing new armies.
+          // Attacking.
+          //attackTerritory(players[nPlayerTurn], Board, dice);
+          // Fortifying your position.
+          if(sUserInput.equals("1"))
+            fortifyArmy(players[nPlayerTurn], Board);
+          if(sUserInput.equals("-1"))
+            bPlayerTurn = false;
+        }
         break;
 
         case 5:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
-        break;
-
-        case 6:
-        // Getting and placing new armies.
-        // Attacking.
-        // Fortifying your position.
+        while(bPlayerTurn)
+        {
+          System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
+          System.out.println("Press \'1\' to fortify");
+          System.out.println("Press \'-1\' to end turn");
+          System.out.println("What would you like to do?");
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+          // Getting and placing new armies.
+          // Attacking.
+          //attackTerritory(players[nPlayerTurn], Board, dice);
+          // Fortifying your position.
+          if(sUserInput.equals("1"))
+            fortifyArmy(players[nPlayerTurn], Board);
+          if(sUserInput.equals("-1"))
+            bPlayerTurn = false;
+        }
         break;
       }
-      nTurn++;  // Next player
+
+      // Twitter Message
+      try{
+        postTwitter.TweetOnTwitter(postMessage(2, nNumberOfTurns, players, nNumPlayers, postTwitter));
+      }catch (TwitterException e) {
+        System.out.println("Did not post to twitter.");
+      }
+
+
+      // Switch Player turn
+      if(nPlayerTurn < nNumPlayers-1)
+        nPlayerTurn++;
+      else
+        nPlayerTurn = 0;
     }
-*/
+
 
 
   }
@@ -525,6 +639,10 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
             System.out.println(Board.returnVacancy().get(i).getName());
         }
       }
+      if(sUserInputCountry.equals("-1"))
+      {
+        bFortify = false;
+      }
 
       // Check if the country belongs to that player
       for(int i = 0; i < player.countriesPlayerHas().size(); i++)
@@ -538,6 +656,7 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
         System.out.println("1. Country does NOT belong to this player...");
         System.out.println("2. Incorrect input (Press 1 to list country your country and type the exact way...)\n");
+        System.out.println("3. Type \'-1\' to exit...\n");
       }
 
       while(bValidName)
@@ -554,6 +673,10 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
               System.out.println(Board.returnBorders(sUserInputCountry).get(i).getName());
           }
         }
+        if(sUserInputCountry.equals("-1"))
+        {
+          bValidName = false;
+        }
 
         // Check if the country is adjacent to each other
         bValidAdjacentName = Board.verifyBorder(sUserInputCountry, sUserInputAdjacent);
@@ -563,6 +686,7 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
           System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
           System.out.println("1. Country does NOT belong to this player...");
           System.out.println("2. Incorrect input (Press 1 to list country that is adjacent to that country...)\n");
+          System.out.println("3. Type \'-1\' to exit...\n");
         }
 
         while(bValidAdjacentName) {
@@ -587,6 +711,10 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
               }
             }
           }
+          if(sUserInputCountry.equals("-1"))
+          {
+            bValidAdjacentName = false;
+          }
 
           if(nUserInput <= (Board.returnNumOfArmies(sUserInputCountry)-1) && nUserInput >= 0)
           {
@@ -609,9 +737,27 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice) {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSomething went wrong...");
             System.out.println("1. You have entered more than the country army limit...");
             System.out.println("2. Incorrect input (Press -1 to list country army number...)\n");
+            System.out.println("3. Type \'-1\' to exit...\n");
           }
         }
       }
     }
+  }
+
+  public static String postMessage(int beginTurn, int nNumberOfTurns, Players[] player, int nNumPlayers, PostTwitter postTwitter) {
+    int territories = 0;
+    String message = "";
+    if(beginTurn == 1) {
+      message += ("Beginning of turn " + nNumberOfTurns + "\n");
+    } else {
+      message += ("End of turn " + nNumberOfTurns + "\n");
+    }
+
+    for(int i = 0; i < nNumPlayers; i++) {
+      territories = player[i].countriesPlayerHas().size();
+      message += (player[i].getName() + " has " + territories + " countries.\n");
+    }
+
+    return message;
   }
 }
