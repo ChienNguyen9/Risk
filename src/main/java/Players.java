@@ -7,18 +7,22 @@ public class Players {
   //private String sColor;
   private int nDice;
   private int nArmies;
-
+  private int nCredits;
+  private int numOfCredits;
   private int numOfArmies;
   private HashMap<String, Country> hasCountry;
   private HashMap<String, Continent> hasContinent;
+  private playerHand hand;
 
   public Players(String name, int nArmy) {
 	  this.sName = name;
 	  //this.sColor = color;
-    this.nDice = 0;
+	  this.nDice = 0;
 	  this.numOfArmies = nArmy;
+	  this.numOfCredits = 0;
 	  hasCountry = new HashMap<String, Country>();
 	  hasContinent = new HashMap<String, Continent>();
+	  hand = new playerHand();
   }
 
   public String getName() {
@@ -31,6 +35,10 @@ public class Players {
 
   public int getNumOfArmies() {
 	  return numOfArmies;
+  }
+  
+  public int getNumOfCredits() {
+	  return numOfCredits;
   }
 
   public void setDice(int dice) {
@@ -74,7 +82,7 @@ public class Players {
   public ArrayList<Country> countriesPlayerHas(){
 	  return new ArrayList<Country>(hasCountry.values());
   }
-
+  
   public void gainArmies(int nArmies) {
 	  numOfArmies = numOfArmies + nArmies;
 	  System.out.println(sName + " has gained " + nArmies + " armies and now has " + numOfArmies + " total armies.");
@@ -84,5 +92,21 @@ public class Players {
 	  numOfArmies = numOfArmies - nArmies;
 	  System.out.println(sName + "'s remaining number of armies: " + numOfArmies);
   }
-
+  public void gainCredits(int nCredits) {
+	  numOfCredits = numOfCredits + nCredits;
+	  System.out.println(sName + " has gained " + nCredits + " credits, and now has a total of " + numOfCredits + " credits.");
+  }
+  public void loseCredits(int nCredits) {
+	  numOfCredits = numOfCredits - nCredits;
+	  System.out.println(sName + "'s remaining available credits: " + numOfCredits);
+  }
+  public void gainRiskCard(Card rCard) {
+	  hand.add(rCard);
+  }
+  public void loseCards(int[] cardsTurnedIn) {
+	  hand.removeFromHand(cardsTurnedIn[0], cardsTurnedIn[1], cardsTurnedIn[2]);
+  }
+  public ArrayList<Card> getPlayersHand(){
+	  return hand.getHand();
+  }
 }
