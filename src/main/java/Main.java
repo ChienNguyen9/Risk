@@ -225,7 +225,7 @@ public class Main {
     // Set up - Claim territories
     int nCountriesClaim = Board.returnCountries().size();
     boolean bValidName = false;
-    while(nCountriesClaim >= 39) {
+    while(nCountriesClaim >= 40) {
       System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
       System.out.println("1. List all the countries...");
 
@@ -365,8 +365,14 @@ public class Main {
 
       switch(nPlayerTurn) {
         case 0:
+        	
           while(bPlayerTurn)
           {
+        	purchaseCredits(players[0]);
+        	purchaseCards(players[0], Board);
+        	purchaseUndo(players[0]);
+        	transferCredits(players[0], Board, nNumPlayers, players);
+        	attackTerritory(players[0], Board, dice, players);
             System.out.println(players[nPlayerTurn].getName() + ", what would you like to do?");
             System.out.println("Press \'1\' to fortify");
             System.out.println("Press \'-1\' to end turn");
@@ -382,7 +388,7 @@ public class Main {
             if(sUserInput.equals("-1"))
               bPlayerTurn = false;
           }
-          attackTerritory(players[0], Board, dice, players);
+   
         break;
 
         case 1:
@@ -404,10 +410,10 @@ public class Main {
           if(sUserInput.equals("-1"))
             bPlayerTurn = false;
         }
-        purchaseCredits(players[1]);
-        purchaseCards(players[1], Board);
-        transferCredits(players[1], Board, nNumPlayers, players);
-        attackTerritory(players[1], Board, dice, players);
+        //purchaseCredits(players[1]);
+        //purchaseCards(players[1], Board);
+        //transferCredits(players[1], Board, nNumPlayers, players);
+        //attackTerritory(players[1], Board, dice, players);
         break;
 
         case 2:
@@ -525,6 +531,7 @@ public static void purchaseCredits(Players player) {
 	Scanner sc;
 	String sUserInput;
 	int nUserInput;
+	System.out.println("\nWelcome to CTC Credits Store!");
 	while(purchasing) {
 		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase credits? (y/n)");
 		sc = new Scanner(System.in);
@@ -532,6 +539,7 @@ public static void purchaseCredits(Players player) {
 		if(sUserInput.equals("y")) {
 			System.out.println("How many would you like to buy? Price rate: $1 = 1 credit");
 			sc = new Scanner(System.in);
+			//checks to make sure input is an integer
 			do {
 				while(!sc.hasNextInt()) {
 					System.out.println("Transaction error: That is not a valid number");
@@ -540,9 +548,11 @@ public static void purchaseCredits(Players player) {
 				}
 				nUserInput = sc.nextInt();
 			}while(nUserInput <= 0);
+				System.out.println("\nPurchase successful!" + "\n");
 				player.gainCredits(nUserInput);
 		}
 		if(sUserInput.equals("n")) {
+			System.out.println("\nExiting CTC Credits Store...");
 			return;
 		}
 	}
@@ -559,6 +569,7 @@ public static void purchaseCards(Players player, RiskBoard Board) {
 	int infantryCost = 1;
 	int cavalryCost = 5;
 	int artilleryCost = 10;
+	System.out.println("\nWelcome to CTC Cards Store!");
 	while(purchasing) {
 		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase a territory card? (y/n) ");
 		System.out.println("1. List available credits ");
@@ -616,6 +627,7 @@ public static void purchaseCards(Players player, RiskBoard Board) {
 				}
 				if(purchased) {
 					validName = false;
+					System.out.println("\nPurchase successful!");
 					for(int i = 0 ;i < player.getPlayersHand().size(); i ++) {
 						System.out.println("\nPlayer: " + player.getName() + " has purchased a territory card for " + player.getPlayersHand().get(i).getCountry() + ", type: " + player.getPlayersHand().get(i).getType());
 					}
@@ -634,10 +646,49 @@ public static void purchaseCards(Players player, RiskBoard Board) {
 			}
 		}
 		if(sUserInput.equals("n")) {
+			System.out.println("\nExiting CTC Cards Store........");
 			return;
 		}
 	}
 }
+
+public static void purchaseUndo(Players player) {
+	boolean purchasing = true;
+	Scanner sc;
+	int nUserInput;
+	String sUserInput;
+	while(purchasing) {
+		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase any Undos? (y/n)");
+		sc = new Scanner(System.in);
+		sUserInput = sc.nextLine();
+		
+		if(sUserInput.equals("y")) {
+			System.out.println("How many would you like to buy? Price rate: 1 Undo = 20 credit");
+			sc = new Scanner(System.in);
+			do {
+				while(!sc.hasNextInt()) {
+					System.out.println("Transaction error: That is not a valid number");
+					System.out.println("Please enter the number of Undos you would like to buy");
+					sc.next();
+				}
+				nUserInput = sc.nextInt();
+			}while(nUserInput <= 0);
+				System.out.println("\nPurchasing Undo(s).........");
+				//Checks if player has enough credits 
+				if(player.getNumOfCredits() < (nUserInput*20)) {
+					System.out.println("\nTransaction error: You do not have enough credits to buy " + nUserInput + " Undo(s)");
+					continue;
+				}
+				System.out.println("Purchase successful!");
+				player.gainUndo(nUserInput);				
+		}
+		
+		if(sUserInput.equals("n")) {
+			return;
+		}
+	}
+}
+
 public static void transferCredits(Players player, RiskBoard Board, int nNumPlayers, Players[] players) {
 	boolean transfer = true;
 	boolean canTransfer = false;
@@ -879,11 +930,11 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice, P
 	    				
 	    				return;
 
-		    	}
-		    }
-	    }	
-	}
-}
+	    			}
+	    		}
+	    	}	
+		}
+    }
 }
 		
 
