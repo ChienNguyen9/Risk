@@ -765,6 +765,8 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice, P
     Integer [] nDefRolls;
     Scanner sc;
     int nUserInput;
+    Subject subject = new Subject();
+
     System.out.println("\nPlayer: " + player.getName() + " will now begin their Attack phase.");
     while(attacking) {
     	System.out.println("\nPlayer: " + player.getName() + ", From which of your countries would you like to attack from?");
@@ -820,7 +822,8 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice, P
 	    	}
 	    	
 	    	while(isOpponent) {
-	    		System.out.println("\nCommencing Attack!");
+          System.out.println("\nCommencing Attack!");
+          subject.setState(1);
 	    		System.out.println("Player: " + player.getName() + "'s armies from " + atkCountryInput + " will be attacking Player: " + Board.returnPlayer(defCountryInput).getName() + "'s armies in " + defCountryInput);
 	    		System.out.println("\n" + player.getName() + ", How many dices would you like to roll to attack?");
     			sc = new Scanner(System.in);
