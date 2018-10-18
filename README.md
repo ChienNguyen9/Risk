@@ -1,7 +1,8 @@
 # Risk Game Rules [![Build Status](https://travis-ci.org/OPzCatchMee/Risk.svg?branch=master)](https://travis-ci.org/OPzCatchMee/Risk) [![codecov](https://codecov.io/gh/OPzCatchMee/Risk/branch/master/graph/badge.svg)](https://codecov.io/gh/OPzCatchMee/Risk)
 
 # How to compile Game
-javac -cp ".;lib/twitter4j-core-4.0.7.jar" \*.java
+javac -cp ".;lib/twitter4j-core-4.0.7.jar" \*.java    <-- Use for Window
+javac -cp ".:lib/twitter4j-core-4.0.7.jar" \*.java    <-- Use for MacOS/ Linux
 
 java -cp ".;lib/twitter4j-core-4.0.7.jar" Main
 
