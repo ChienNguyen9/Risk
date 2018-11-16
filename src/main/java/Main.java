@@ -8,10 +8,25 @@ import java.lang.StringBuilder;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import twitter4j.TwitterException;
 
 public class Main {
   public static void main(String[] args) throws TwitterException, IOException {
+
+      ApiContextInitializer.init();
+      TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+      TelegramChatBot telegramChatBot = new TelegramChatBot();
+      try {
+          telegramBotsApi.registerBot(telegramChatBot);
+      } catch (TelegramApiException e) {
+          e.printStackTrace();
+      }
+      telegramChatBot.sendMessage("Hello, starting game now");
+
+
 	  String countryFile = "Countries.txt";
 	  String continentFile = "Continents.txt";
 	  String borderingCountryFile  = "BorderingCountries.txt";
