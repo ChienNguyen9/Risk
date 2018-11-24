@@ -1,0 +1,25 @@
+# Created at 2018-11-23T21:39:03.281
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:397)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:844)
+
+
+# Created at 2018-11-23T21:39:09.293
+Unexpected IOException: 6,1,TestTimeOutPlayer,runningFiveSeconds,null,null,null
+
+
+# Created at 2018-11-23T21:39:09.299
+Unexpected IOException: 5,1,TestTimeOutPlayer,ThirtySeconds,null,null,null
+
+
+# Created at 2018-11-23T21:39:09.304
+Unexpected IOException: 6,1,TestTimeOutPlayer,ThirtySeconds,null,null,null
+
+
+# Created at 2018-11-23T21:39:09.309
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,TestTimeOutPlayer,null,null,null
+
+
