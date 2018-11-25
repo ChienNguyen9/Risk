@@ -8,10 +8,12 @@ public class TestSetUp {
     setUpGame game = new setUpGame();
     game.creatingBoard();
 
-    //game.numberOfPlayerPlaying();
+    game.numberOfPlayerPlaying(3);
 
-    //game.initPlayer();
-    //game.chooseFirstTurn();
+    game.initPlayer(true);
+
+    game.chooseFirstTurn(true);
+
     //game.claimCountry();
     //game.setArmyToCountry();
   }

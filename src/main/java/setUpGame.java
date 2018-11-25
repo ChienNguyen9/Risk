@@ -96,7 +96,7 @@ public class setUpGame {
 	  }
   }
 
-  public void numberOfPlayerPlaying()
+  public void numberOfPlayerPlaying(int nNumberPlayers)
   {
     System.out.println("=============================================================");
     System.out.println("============ Welcome to Risk Board Game !!! =================");
@@ -104,43 +104,48 @@ public class setUpGame {
 
     // Keep running until user pick a valid number of players
     while(bGameRunning) {
-      if(nNumPlayers >= 2 && nNumPlayers <= 6) {
+      if(nNumberPlayers >= 2 && nNumberPlayers <= 6) {
         bGameRunning = false;
       } else {
         System.out.println("Please select how many players (2-6) are playing...");
 
         sc = new Scanner(System.in);
-        nNumPlayers = sc.nextInt();
+        nNumberPlayers = sc.nextInt();
       }
     }
 
     System.out.println("=============================================================");
-    System.out.println("============== You have select " + nNumPlayers  + " Players. ===================");
+    System.out.println("============== You have select " + nNumberPlayers  + " Players. ===================");
     System.out.println("=============================================================");
 
-    players = new Players[nNumPlayers];
+    players = new Players[nNumberPlayers];
 
     // Give each player the amount of infantry
-    if(nNumPlayers == 2)  // Not sure what to do for 2 players
-      nArmies = 1;
-    if(nNumPlayers == 3)
+    if(nNumberPlayers == 2)
       nArmies = 35;
-    if(nNumPlayers == 4)
+    if(nNumberPlayers == 3)
+      nArmies = 35;
+    if(nNumberPlayers == 4)
       nArmies = 30;
-    if(nNumPlayers == 5)
+    if(nNumberPlayers == 5)
       nArmies = 25;
-    if(nNumPlayers == 6)
+    if(nNumberPlayers == 6)
       nArmies = 20;
+
+    nNumPlayers = nNumberPlayers;
   }
 
-  public void initPlayer()
+  public void initPlayer(boolean testUnit)
   {
     for(int p = 0; p < nNumPlayers; p++) {
       String sName = "Player " + (p+1);
 
-      System.out.println("Please name "+ sName + "...");
-      sc = new Scanner(System.in);
-      sName = sc.nextLine();
+      if(!testUnit)
+      {
+        System.out.println("Please name "+ sName + "...");
+        sc = new Scanner(System.in);
+        sName = sc.nextLine();
+      }
 
       players[p] = new Players(sName, nArmies);
       //sColorOption[nColor-1] = null;
@@ -154,21 +159,10 @@ public class setUpGame {
       System.out.println("Player " + (p+1) + " is name: " + players[p].getName());
       // System.out.println("Player " + (p+1) + " is color: " + players[p].getColor());
     }
-
-    // Let the player imbrace with their name
-    System.out.println("Press Enter key to continue...");
-    try
-    {
-        System.in.read();
-    }
-    catch(Exception e)
-    {
-      System.out.println(e.getMessage());
-    }
     System.out.println("=============================================================\n\n");
   }
 
-  public void chooseFirstTurn()
+  public void chooseFirstTurn(boolean testUnit)
   {
     // Setup number 2 - whoever rolls the highest number gets to choose any territory
     System.out.println("===================== Whoever rolls the dice gets to pick first territory ========================================\n");
@@ -208,13 +202,17 @@ public class setUpGame {
       } else {
         System.out.println("\n\n There are 2 or more players that have the same number. Must roll again.");
         System.out.println("Press Enter key to continue...");
-        try
+
+        if(!testUnit)
         {
-            System.in.read();
-        }
-        catch(Exception e)
-        {
-          System.out.println(e.getMessage());
+          try
+          {
+              System.in.read();
+          }
+          catch(Exception e)
+          {
+            System.out.println(e.getMessage());
+          }
         }
       }
     }
@@ -373,9 +371,9 @@ public class setUpGame {
       telegramChatBot.sendMessage("Hello, starting game now");*/
 
     creatingBoard();
-    numberOfPlayerPlaying();
-    initPlayer();
-    chooseFirstTurn();
+    numberOfPlayerPlaying(-1);
+    initPlayer(false);
+    chooseFirstTurn(false);
     claimCountry();
     setArmyToCountry();
 
