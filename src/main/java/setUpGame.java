@@ -218,18 +218,24 @@ public class setUpGame {
     }
   }
 
-  public void claimCountry()
+  public void claimCountry(boolean testUnit)
   {
     // Set up - Claim territories
     int nCountriesClaim = Board.returnCountries().size();
     boolean bValidName = false;
+    int testUnitCountry = -1;
     while(nCountriesClaim >= 40) {
+      testUnitCountry++;
+      sUserInput = Board.returnVacancy().get(testUnitCountry).getName(); // Use for test case
       System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
       System.out.println("1. List all the countries...");
 
-      bValidName = false;
-      sc = new Scanner(System.in);
-      sUserInput = sc.nextLine();
+      if(!testUnit)
+      {
+        bValidName = false;
+        sc = new Scanner(System.in);
+        sUserInput = sc.nextLine();
+      }
 
       if(sUserInput.equals("1"))
       {
@@ -248,7 +254,7 @@ public class setUpGame {
 
         }
         // If user has input a valid country and it is not occupy by any players. Then let the player take control of that country
-        if(bValidName)
+        if(bValidName || testUnit)
         {
           Board.setPlayer(sUserInput, players[nPlayerTurn]);
           players[nPlayerTurn].gainCountry(Board.returnNameOfCountry(sUserInput));
@@ -272,14 +278,17 @@ public class setUpGame {
       }
       nCountriesClaim = Board.returnVacancy().size(); // Check if all the countries are claimed
     }
+    sUserInput = "nothing";
   }
 
-  public void setArmyToCountry()
+  public void setArmyToCountry(boolean testUnit)
   {
     // Set remaining troops that players have
     bGameRunning = true;
     boolean bValidName = false;
-    while(bGameRunning)
+    boolean testUnitLoopOnce = true;
+
+    while(bGameRunning && testUnitLoopOnce)
     {
       // All user have place their troops
       bGameRunning = false;
@@ -293,8 +302,16 @@ public class setUpGame {
       {
         bValidName = false;
         System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + ", which country would you like to add troop to?");
-        sc = new Scanner(System.in);
-        sUserInput = sc.nextLine();
+
+        if(!testUnit)
+        {
+          sc = new Scanner(System.in);
+          sUserInput = sc.nextLine();
+        }else{
+          sUserInput = "China";
+          bValidName = true;
+          testUnitLoopOnce = false;
+        }
 
         // Check if the country belongs to that player
         for(int i = 0; i < players[nPlayerTurn].countriesPlayerHas().size(); i++)
@@ -307,8 +324,14 @@ public class setUpGame {
         {
           players[nPlayerTurn].loseArmies(0); // Display how many troop this player has left
           System.out.println("How many troops would you like to add to " + sUserInput + "?");
-          sc = new Scanner(System.in);
-          nUserInput = sc.nextInt();
+
+          if(!testUnit)
+          {
+            sc = new Scanner(System.in);
+            nUserInput = sc.nextInt();
+          }else{
+            nUserInput = nArmies;
+          }
 
           if(nUserInput <= players[nPlayerTurn].getNumOfArmies() && nUserInput >= 0)
           {
@@ -374,8 +397,8 @@ public class setUpGame {
     numberOfPlayerPlaying(-1);
     initPlayer(false);
     chooseFirstTurn(false);
-    claimCountry();
-    setArmyToCountry();
+    claimCountry(false);
+    setArmyToCountry(false);
 
 
 

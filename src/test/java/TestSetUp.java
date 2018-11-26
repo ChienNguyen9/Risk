@@ -14,7 +14,8 @@ public class TestSetUp {
 
     game.chooseFirstTurn(true);
 
-    //game.claimCountry();
-    //game.setArmyToCountry();
+    //game.claimCountry(true);
+
+    game.setArmyToCountry(true);
   }
 }
