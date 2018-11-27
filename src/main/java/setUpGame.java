@@ -805,6 +805,7 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice, P
     Scanner sc;
     int nUserInput;
     Subject subject = new Subject();
+    new BinaryObserver(subject);
 
     System.out.println("\nPlayer: " + player.getName() + " will now begin their Attack phase.");
     while(attacking) {
@@ -874,6 +875,7 @@ public static void attackTerritory(Players player, RiskBoard Board, Dice dice, P
 
 	    	while(isOpponent) {
           System.out.println("\nCommencing Attack!");
+          System.out.print(Board.returnPlayer(defCountryInput).getName());
           subject.setState(1);
 	    		System.out.println("Player: " + player.getName() + "'s armies from " + atkCountryInput + " will be attacking Player: " + Board.returnPlayer(defCountryInput).getName() + "'s armies in " + defCountryInput);
 	    		System.out.println("\n" + player.getName() + ", How many dices would you like to roll to attack?");

@@ -9,7 +9,8 @@ public class BinaryObserver extends Observer{
     public void update() {
 
         if(subject.getState() == 1) {
-            System.out.println("Your territory is under attack!");
+            System.out.println(", your territory is under attack!");
+            subject.setState(0);
         }
        
     }
