@@ -56,18 +56,18 @@ public class setUpGame {
 
   }
 
-  public void creatingBoard()
+  public void creatingBoard(String countryFile,String borderingCountryFile,String continentFile)
   {
     Board = new RiskBoard();
 
 	  try{
-  		reader = new BufferedReader(new FileReader(countryFile));
-  		stringBuilder = new StringBuilder();
+  		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
+  		StringBuilder stringBuilder = new StringBuilder();
   		while((fileLine = reader.readLine()) != null) {
   			stringBuilder.append(fileLine);
 		   }
-  		fileInput = stringBuilder.toString();
-  		Countries = fileInput.split("\t");
+  		String fileInput = stringBuilder.toString();
+  		String[] Countries = fileInput.split("\t");
   		System.out.println(Arrays.toString(Countries) + "\n");
 
   		reader = new BufferedReader(new FileReader(borderingCountryFile));
@@ -76,7 +76,7 @@ public class setUpGame {
   			stringBuilder.append(fileLine);
   		}
   		fileInput = stringBuilder.toString();
-  		borderingCountries = fileInput.split("\t");
+  		String[] borderingCountries = fileInput.split("\t");
   		System.out.println(Arrays.toString(borderingCountries));
 
   		reader = new BufferedReader(new FileReader(continentFile));
@@ -85,7 +85,7 @@ public class setUpGame {
   			stringBuilder.append(fileLine);
   		}
   		fileInput = stringBuilder.toString();
-  		Continents = fileInput.split("\t");
+  		String[] Continents = fileInput.split("\t");
   		System.out.println(Arrays.toString(Continents) + "\n");
 
 		  createdBoard = Board.SetBoard(Countries, Continents, borderingCountries);
@@ -393,7 +393,7 @@ public class setUpGame {
       }
       telegramChatBot.sendMessage("Hello, starting game now");*/
 
-    creatingBoard();
+    creatingBoard(countryFile,borderingCountryFile,continentFile);
     numberOfPlayerPlaying(-1);
     initPlayer(false);
     chooseFirstTurn(false);
