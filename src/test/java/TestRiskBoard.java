@@ -34,7 +34,7 @@ public class TestRiskBoard {
         board.returnContinents();
         board.returnNameOfContinent("North America");
   }
-  
+
   @Test
   public void testSetArmy() throws IOException,FileNotFoundException {
     setUpGame game = new setUpGame();

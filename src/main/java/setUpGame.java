@@ -222,7 +222,7 @@ public class setUpGame {
     int nCountriesClaim = Board.returnCountries().size();
     boolean bValidName = false;
     int testUnitCountry = -1;
-    while(nCountriesClaim >= 40) {
+    while(nCountriesClaim >= 1) {
       testUnitCountry++;
       sUserInput = Board.returnVacancy().get(testUnitCountry).getName(); // Use for test case
       System.out.println("Player " + (nPlayerTurn+1) + ": " + players[nPlayerTurn].getName() + " which country would you like to claim?");
@@ -430,9 +430,9 @@ public class setUpGame {
       while(bPlayerTurn)
       {
         if(threadTimeOut.isAlive())
-      	  purchaseCredits(players[nPlayerTurn], timeoutPlayer.getTimeLeft());
+      	  purchaseCredits(players[nPlayerTurn], timeoutPlayer.getTimeLeft(), false);
         if(threadTimeOut.isAlive())
-      	 purchaseCards(players[nPlayerTurn], Board, timeoutPlayer.getTimeLeft());
+      	 purchaseCards(players[nPlayerTurn], Board, timeoutPlayer.getTimeLeft(), false);
         if(threadTimeOut.isAlive())
       	 purchaseUndo(players[nPlayerTurn], timeoutPlayer.getTimeLeft());
         if(threadTimeOut.isAlive())
@@ -487,20 +487,25 @@ public class setUpGame {
   }
 }
 
-public static void purchaseCredits(Players player, float ftimeLeft) {
+public static void purchaseCredits(Players player, float ftimeLeft, boolean isTesting) {
   Thread threadTimeOut;
   threadTimeOut = new Thread(new TimeoutPlayer(ftimeLeft));
   threadTimeOut.start();
 
 	boolean purchasing = true;
-	Scanner sc;
 	String sUserInput;
+  Scanner sc1 = new Scanner(System.in);
 	int nUserInput;
 	System.out.println("\nWelcome to CTC Credits Store!");
 	while(purchasing) {
 		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase credits? (y/n)");
-		sc = new Scanner(System.in);
-		sUserInput = sc.nextLine();
+    if(!isTesting)
+    {
+      sc1 = new Scanner(System.in);
+  		sUserInput = sc1.nextLine();
+    }else{
+      sUserInput = "y";
+    }
 
     if(threadTimeOut.isAlive() == false) {
       System.out.println("Skipping turn... 30 seconds passed");
@@ -509,7 +514,8 @@ public static void purchaseCredits(Players player, float ftimeLeft) {
 
 		if(sUserInput.equals("y")) {
 			System.out.println("How many would you like to buy? Price rate: $1 = 1 credit");
-			sc = new Scanner(System.in);
+      if(!isTesting)
+        sc1 = new Scanner(System.in);
 
       if(threadTimeOut.isAlive() == false) {
         System.out.println("Skipping turn... 30 seconds passed");
@@ -518,18 +524,24 @@ public static void purchaseCredits(Players player, float ftimeLeft) {
 
 			//checks to make sure input is an integer
 			do {
-				while(!sc.hasNextInt()) {
-					System.out.println("Transaction error: That is not a valid number");
-					System.out.println("Please enter the number of credits you would like to buy");
-					sc.next();
+        if(!isTesting)
+        {
+  				while(!sc1.hasNextInt()) {
+  					System.out.println("Transaction error: That is not a valid number");
+  					System.out.println("Please enter the number of credits you would like to buy");
+  				  sc1.next();
 
-          if(threadTimeOut.isAlive() == false) {
-            System.out.println("Skipping turn... 30 seconds passed");
-            return;
-          }
-				}
-				nUserInput = sc.nextInt();
-			}while(nUserInput <= 0);
+            if(threadTimeOut.isAlive() == false) {
+              System.out.println("Skipping turn... 30 seconds passed");
+              return;
+            }
+  				}
+				  nUserInput = sc1.nextInt();
+        }else {
+          nUserInput = 10;
+          purchasing = false;
+        }
+      }while(nUserInput <= 0);
 				System.out.println("\nPurchase successful!" + "\n");
 				player.gainCredits(nUserInput);
 		}
@@ -539,13 +551,13 @@ public static void purchaseCredits(Players player, float ftimeLeft) {
 		}
 	}
 }
-public static void purchaseCards(Players player, RiskBoard Board, float ftimeLeft) {
+public static void purchaseCards(Players player, RiskBoard Board, float ftimeLeft, boolean isTesting) {
   Thread threadTimeOut;
   threadTimeOut = new Thread(new TimeoutPlayer(ftimeLeft));
   threadTimeOut.start();
 
 	boolean purchasing = true;
-	Scanner sc;
+	Scanner sc1 = new Scanner(System.in);
 	String countryInput;
 	String armyInput;
 	Card pCard;
@@ -559,8 +571,8 @@ public static void purchaseCards(Players player, RiskBoard Board, float ftimeLef
 	while(purchasing) {
 		System.out.println("\nPlayer : " + player.getName() + " would you like to purchase a territory card? (y/n) ");
 		System.out.println("1. List available credits ");
-		sc = new Scanner(System.in);
-		sUserInput = sc.nextLine();
+		sc1 = new Scanner(System.in);
+		sUserInput = sc1.nextLine();
 
     if(threadTimeOut.isAlive() == false) {
       System.out.println("Skipping turn... 30 seconds passed");
@@ -574,8 +586,8 @@ public static void purchaseCards(Players player, RiskBoard Board, float ftimeLef
 			//Do you have to own the country to purchase a card for?
 
 			System.out.println("\nWhich country would you like this territory card for?");
-			sc = new Scanner(System.in);
-			countryInput = sc.nextLine();
+			sc1 = new Scanner(System.in);
+			countryInput = sc1.nextLine();
 
       if(threadTimeOut.isAlive() == false) {
         System.out.println("Skipping turn... 30 seconds passed");
@@ -593,8 +605,8 @@ public static void purchaseCards(Players player, RiskBoard Board, float ftimeLef
 			}
 			while(validName) {
 				System.out.println("\nWould you like Infantry($1), Cavalry($5), or Artillery($10) army type for this territory card?");
-				sc = new Scanner(System.in);
-				armyInput = sc.nextLine();
+				sc1 = new Scanner(System.in);
+				armyInput = sc1.nextLine();
 
         if(threadTimeOut.isAlive() == false) {
           System.out.println("Skipping turn... 30 seconds passed");
