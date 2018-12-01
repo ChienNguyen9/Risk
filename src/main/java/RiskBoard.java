@@ -16,7 +16,7 @@ public class RiskBoard {
 	private ArrayList<Country> vacancy;
 
 	public boolean SetBoard(String[] countryInputs, String[] continentInputs, String[] borderingCountriesInputs ) {
-		generated = false;
+		boolean generated = false;
 
 		mapOfCountries = new HashMap<String, Country>();
 		for(int i = 0; i < countryInputs.length; i++) {
