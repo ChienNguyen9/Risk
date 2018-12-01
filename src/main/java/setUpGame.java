@@ -64,7 +64,7 @@ public class setUpGame {
   		while((fileLine = reader.readLine()) != null) {
   			stringBuilder.append(fileLine);
 		   }
-  		String fileInput = stringBuilder.toString();
+  		fileInput = stringBuilder.toString();
   		String[] Countries = fileInput.split("\t");
   		System.out.println(Arrays.toString(Countries) + "\n");
 
