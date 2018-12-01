@@ -2,10 +2,10 @@
 
 # How to compile Game
 javac -cp ".;lib/twitter4j-core-4.0.7.jar" \*.java    <-- Use for Window
+java -cp ".;lib/twitter4j-core-4.0.7.jar" Main
 
 javac -cp ".:lib/twitter4j-core-4.0.7.jar" \*.java    <-- Use for MacOS/ Linux
-
-java -cp ".;lib/twitter4j-core-4.0.7.jar" Main
+java -cp ".:lib/twitter4j-core-4.0.7.jar" Main
 
 # Twitter Account
 https://twitter.com/ChienNg53396496
