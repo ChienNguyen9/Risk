@@ -29,6 +29,25 @@ public class TestRiskBoard {
   		final String[] borderingCountries = fileInput.split("\t");
         RiskBoard board = new RiskBoard();
         board.SetBoard(countries, continents, borderingCountries);
+
+        System.out.println(board.returnCountries().size());
+        System.out.println(board.returnNameOfCountry("Japan").getName());
+        System.out.println(board.returnBorders("China").size());
+        System.out.println(board.verifyBorder("China", "Japan"));
+        System.out.println(board.verifyBorder("Alaska", "Alberta"));
+        System.out.println(board.returnContinents().size());
+        System.out.println(board.returnNameOfContinent("Australia").getName());
+        System.out.println(board.returnLocalCountries("Australia").size());
+        System.out.println(board.returnExtraArmies("Australia"));
+
+        Players player = new Players("Rush", 100);
+        board.setPlayer("China", player);
+        System.out.println(board.returnPlayer("Japan").getName());
+        board.setNumOfArmies("Japan", 100);
+        System.out.println(board.returnNumOfArmies("Japan"));
+        System.out.println(board.returnVacancy().size());
+
+
         board.returnCountries();
         board.returnNameOfCountry("China");
         board.returnContinents();
