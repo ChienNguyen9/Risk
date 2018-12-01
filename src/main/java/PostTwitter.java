@@ -21,24 +21,24 @@ public class PostTwitter
   Properties prop;
   // FileInputStream in;
 
-  public PostTwitter() throws IOException {
+  public PostTwitter() {
     status = new ArrayList<Status>();
 
     // Load the twitter api keys
     prop = new Properties();
-    InputStream in = new FileInputStream("../../../secrets_CTC.prop");
+    //InputStream in = new FileInputStream("../../../secrets_CTC.prop");
 
-    prop.load(in);
-    prop.list(System.out);
+    //prop.load(in);
+    //prop.list(System.out);
 
     cb.setDebugEnabled(true)
-            .setOAuthConsumerKey(prop.getProperty("consumerKey"))
-            .setOAuthConsumerSecret(prop.getProperty("consumerSecret"))
-            .setOAuthAccessToken(prop.getProperty("accessToken"))
-            .setOAuthAccessTokenSecret(prop.getProperty("accessTokenSecret"));
+            .setOAuthConsumerKey("UaGIIXgwOx3jWkaBH296AllCX")
+            .setOAuthConsumerSecret("Lzx3bOiqv5mxdSfLsynWDT5tHsPphAFWvyZvlo6bP9vCtbcg1V")
+            .setOAuthAccessToken("1050537864172371968-SknW7VeBEo6wdXU0bdusTQ5klDLh9X")
+            .setOAuthAccessTokenSecret("oTTGjhisM4ppF15RQcRX64J5dDtI4T0IekDmYNGO4mvFK");
 
     tf = new TwitterFactory(cb.build());
-    in.close();
+    //in.close();
   }
 
   public void TweetOnTwitter(String output) throws TwitterException{

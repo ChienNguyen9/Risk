@@ -18,15 +18,11 @@ public class setUpGame {
   String countryFile = "Countries.txt";
   String continentFile = "Continents.txt";
   String borderingCountryFile  = "BorderingCountries.txt";
-  String fileLine;
-  String fileInput;
-  BufferedReader reader;
-  StringBuilder stringBuilder;
   String[] Countries;
   String[] Continents;
   String[] borderingCountries;
-  RiskBoard Board;
   boolean createdBoard;
+  RiskBoard Board;
 
   PostTwitter postTwitter;
 
@@ -53,16 +49,18 @@ public class setUpGame {
 
   public setUpGame()
   {
-
   }
 
   public void creatingBoard()
   {
+    String fileLine;
+    String fileInput;
+
     Board = new RiskBoard();
 
 	  try{
-  		reader = new BufferedReader(new FileReader(countryFile));
-  		stringBuilder = new StringBuilder();
+  		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
+  		StringBuilder stringBuilder = new StringBuilder();
   		while((fileLine = reader.readLine()) != null) {
   			stringBuilder.append(fileLine);
 		   }
