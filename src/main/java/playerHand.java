@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class playerHand {
 
-	private boolean condition;
 	private ArrayList<Card> hand;
 
 	//Create players' hands
@@ -33,7 +32,7 @@ public class playerHand {
 	//Return true if player can trade in cards for armies
 	public boolean canTradeCards(int card1, int card2, int card3) {
 
-		condition = false;
+		boolean condition = false;
 
 		//If player has 3 cards with the same armyType
 		if (hand.size() >= 3) {
