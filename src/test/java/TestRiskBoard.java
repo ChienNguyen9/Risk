@@ -30,7 +30,7 @@ public class TestRiskBoard {
         RiskBoard board = new RiskBoard();
         board.SetBoard(countries, continents, borderingCountries);
 
-        System.out.println(board.returnCountries().size());
+        assertEquals(board.returnCountries().size(), 42);
         System.out.println(board.returnNameOfCountry("Japan").getName());
         System.out.println(board.returnBorders("China").size());
         System.out.println(board.verifyBorder("China", "Japan"));
@@ -82,4 +82,5 @@ public class TestRiskBoard {
         board.returnNumOfArmies("China");
 
   }
+
 }

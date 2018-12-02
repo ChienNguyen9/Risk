@@ -12,7 +12,9 @@ public class TestSetUp {
   @Test
   public void initBoardGame() {
     setUpGame game = new setUpGame();
-    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt");
+    RiskBoard Board = new RiskBoard();
+
+    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt", Board);
 
     game.numberOfPlayerPlaying(3);
 
@@ -49,9 +51,9 @@ public class TestSetUp {
                 "Yakutsk","Eastern Australia","Indonesia","LotR","New Guinea","Western Australia"};
     final String[] continents = {"North America","South America","Asia","Africa","Europe","Australia"};
     final String[] borders = {};
-    RiskBoard board = new RiskBoard();
-    board.SetBoard(countries, continents, borders);
-    game.claimCountry(true);
+    RiskBoard Board = new RiskBoard();
+    Board.SetBoard(countries, continents, borders);
+    game.claimCountry(true, Board);
 
   }
 }

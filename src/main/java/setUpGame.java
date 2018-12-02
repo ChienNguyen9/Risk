@@ -22,7 +22,6 @@ public class setUpGame {
   String[] Continents;
   String[] borderingCountries;
   boolean createdBoard;
-  RiskBoard Board;
 
   PostTwitter postTwitter;
 
@@ -51,12 +50,10 @@ public class setUpGame {
   {
   }
 
-  public void creatingBoard(String countryFile,String borderingCountryFile,String continentFile)
+  public void creatingBoard(String countryFile,String borderingCountryFile,String continentFile, RiskBoard Board)
   {
     String fileLine;
     String fileInput;
-
-    Board = new RiskBoard();
 
 	  try{
   		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
@@ -216,7 +213,7 @@ public class setUpGame {
     }
   }
 
-  public void claimCountry(boolean testUnit)
+  public void claimCountry(boolean testUnit, RiskBoard Board)
   {
     // Set up - Claim territories
     int nCountriesClaim = Board.returnCountries().size();
@@ -370,6 +367,7 @@ public class setUpGame {
 
   public void runningGame() throws TwitterException, IOException {
 
+    RiskBoard Board = new RiskBoard();
     postTwitter = new PostTwitter();
     timeoutPlayer = new TimeoutPlayer(30);
     createdBoard = false;
@@ -391,11 +389,11 @@ public class setUpGame {
       }
       telegramChatBot.sendMessage("Hello, starting game now");*/
 
-    creatingBoard(countryFile,borderingCountryFile,continentFile);
+    creatingBoard(countryFile,borderingCountryFile,continentFile, Board);
     numberOfPlayerPlaying(-1);
     initPlayer(false);
     chooseFirstTurn(false);
-    claimCountry(false);
+    claimCountry(false, Board);
     setArmyToCountry(false);
 
 
