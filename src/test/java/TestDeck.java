@@ -53,5 +53,10 @@ public class TestDeck {
         deck.shuffle();
 
     }
+    @Test
+    public void testDraw() {
+        Deck deck = new Deck();
+        deck.drawCard();
+    }
 
 }
