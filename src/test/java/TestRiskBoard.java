@@ -5,82 +5,122 @@ import java.lang.StringBuilder;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class TestRiskBoard {
 
   @Test
-  public void testSetBoard() throws FileNotFoundException,IOException {
-        setUpGame game = new setUpGame();
-        final String[] countries = {"Alaska","Alberta","Central America","Eastern United States",
-                                    "Greenland","Northwest Territory","Ontario","Quebec","Western United States",
-                                    "Argentina","Brazil","Venezuela","Great Britain","Iceland","Northern Europe",
-                                    "Scandinavia","Southern Europe","Ukraine","Western Europe","Congo","East Africa",
-                                    "Egypt","Madagascar","North Africa","South Africa","Afghanistan","China","India",
-                                    "Irkutsk","Japan","Kamchatka","Middle East","Mongolia","Siam","Siberia","Ural",
-                    "Yakutsk","Eastern Australia","Indonesia","LotR","New Guinea","Western Australia"};
-        final String[] continents = {"North America","South America", "Australia", "Asia", "Africa", "Europe"};
-        String fileLine;
-       BufferedReader reader = new BufferedReader(new FileReader("src/test/java/BorderingCountries.txt"));
+  public void testReturnMap(){
+    
+    String countryFile = "src/test/java/Countries.txt";
+    String borderingCountryFile = "src/test/java/BorderingCountries.txt";
+    String continentFile = "src/test/java/Continents.txt";
+    String fileLine;
+    RiskBoard board = new RiskBoard();
+    
+    try{
+  		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
   		StringBuilder stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+		   }
+  		String fileInput = stringBuilder.toString();
+  		String[] Countries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Countries) + "\n");
+
+  		reader = new BufferedReader(new FileReader(borderingCountryFile));
+  		stringBuilder = new StringBuilder();
   		while((fileLine = reader.readLine()) != null){
   			stringBuilder.append(fileLine);
   		}
-  		String fileInput = stringBuilder.toString();
-  		final String[] borderingCountries = fileInput.split("\t");
-        RiskBoard board = new RiskBoard();
-        board.SetBoard(countries, continents, borderingCountries);
+  		fileInput = stringBuilder.toString();
+  		String[] borderingCountries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(borderingCountries));
 
-        assertEquals(board.returnCountries().size(), 42);
-        System.out.println(board.returnNameOfCountry("Japan").getName());
-        System.out.println(board.returnBorders("China").size());
-        System.out.println(board.verifyBorder("China", "Japan"));
-        System.out.println(board.verifyBorder("Alaska", "Alberta"));
-        System.out.println(board.returnContinents().size());
-        System.out.println(board.returnNameOfContinent("Australia").getName());
-        System.out.println(board.returnLocalCountries("Australia").size());
-        System.out.println(board.returnExtraArmies("Australia"));
+  		reader = new BufferedReader(new FileReader(continentFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		String[] Continents = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Continents) + "\n");
 
-        Players player = new Players("Rush", 100);
-        board.setPlayer("China", player);
-        System.out.println(board.returnPlayer("Japan").getName());
-        board.setNumOfArmies("Japan", 100);
-        System.out.println(board.returnNumOfArmies("Japan"));
-        System.out.println(board.returnVacancy().size());
+		  board.SetBoard(Countries, Continents, borderingCountries);
+		}catch(FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+    }
+    
+    board.returnCountries();
+    board.returnNameOfCountry("China");
 
+    board.returnBorders("China");
+    board.verifyBorder("China", "India");
+    board.verifyBorder("China", "Brazil");
 
-        board.returnCountries();
-        board.returnNameOfCountry("China");
-        board.returnContinents();
-        board.returnNameOfContinent("North America");
+    board.returnContinents();
+    board.returnNameOfContinent("Asia");
+    board.returnLocalCountries("Asia");
+    
+    
   }
 
   @Test
-  public void testSetArmy() throws IOException,FileNotFoundException {
-    setUpGame game = new setUpGame();
-        final String[] countries = {"Alaska","Alberta","Central America","Eastern United States",
-                                    "Greenland","Northwest Territory","Ontario","Quebec","Western United States",
-                                    "Argentina","Brazil","Venezuela","Great Britain","Iceland","Northern Europe",
-                                    "Scandinavia","Southern Europe","Ukraine","Western Europe","Congo","East Africa",
-                                    "Egypt","Madagascar","North Africa","South Africa","Afghanistan","China","India",
-                                    "Irkutsk","Japan","Kamchatka","Middle East","Mongolia","Siam","Siberia","Ural",
-                    "Yakutsk","Eastern Australia","Indonesia","LotR","New Guinea","Western Australia"};
-        final String[] continents = {"North America","South America", "Australia", "Asia", "Africa", "Europe"};
-        String fileLine;
-       BufferedReader reader = new BufferedReader(new FileReader("src/test/java/BorderingCountries.txt"));
+  public void testCountryStatus(){
+    
+    String countryFile = "src/test/java/Countries.txt";
+    String borderingCountryFile = "src/test/java/BorderingCountries.txt";
+    String continentFile = "src/test/java/Continents.txt";
+    String fileLine;
+    RiskBoard board = new RiskBoard();
+    Players player = new Players("Georgy",10);
+    
+    try{
+  		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
   		StringBuilder stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+		   }
+  		String fileInput = stringBuilder.toString();
+  		String[] Countries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Countries) + "\n");
+
+  		reader = new BufferedReader(new FileReader(borderingCountryFile));
+  		stringBuilder = new StringBuilder();
   		while((fileLine = reader.readLine()) != null){
   			stringBuilder.append(fileLine);
   		}
-  		String fileInput = stringBuilder.toString();
-  		final String[] borderingCountries = fileInput.split("\t");
-        Players player = new Players("Georgy",30);
-        RiskBoard board = new RiskBoard();
-        board.SetBoard(countries, continents, borderingCountries);
-        board.setPlayer("China", player);
-        board.returnPlayer("China");
-        board.setNumOfArmies("China", 5);
-        board.returnNumOfArmies("China");
+  		fileInput = stringBuilder.toString();
+  		String[] borderingCountries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(borderingCountries));
 
+  		reader = new BufferedReader(new FileReader(continentFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		String[] Continents = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Continents) + "\n");
+
+		  board.SetBoard(Countries, Continents, borderingCountries);
+		}catch(FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+    }
+
+    board.setPlayer("China", player);
+    board.returnPlayer("China");
+    
+    board.setNumOfArmies("China", 5);
+    board.returnNumOfArmies("China");
+
+    board.returnVacancy();
+
+    board.returnExtraArmies("Asia");
+    
   }
-
 }

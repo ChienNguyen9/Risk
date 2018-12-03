@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 public class TestPlayerHand {
 
@@ -13,7 +14,7 @@ public class TestPlayerHand {
     hand.getHand();
   }
   @Test
-  public void testTradeIn() {
+  public void testSameCardTradeIn() {
     playerHand hand = new playerHand();
     Card card1 = new Card("Infantry", "Japan");
     Card card2 = new Card("Infantry", "China");
@@ -25,10 +26,21 @@ public class TestPlayerHand {
   }
 
   @Test
-  public void testInvalidTradeIn() {
+  public void testUniqueCardsTradeIn() {
     playerHand hand = new playerHand();
     Card card1 = new Card("Infantry", "Japan");
     Card card2 = new Card("Cavalry", "China");
+    Card card3 = new Card("Artillery", "Indonesia");
+    hand.add(card1);
+    hand.add(card2);
+    hand.add(card3);
+    hand.removeFromHand(0,1,2);
+  }
+  @Test
+  public void testInvalidTradeIn() {
+    playerHand hand = new playerHand();
+    Card card1 = new Card("Infantry", "Japan");
+    Card card2 = new Card("Infantry", "China");
     Card card3 = new Card("Artillery", "Indonesia");
     hand.add(card1);
     hand.add(card2);
