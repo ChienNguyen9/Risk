@@ -56,4 +56,68 @@ public class TestSetUp {
     game.claimCountry(true, Board);
 
   }
+
+  @Test
+  public void TestTwoPlayers() {
+    setUpGame game = new setUpGame();
+    RiskBoard Board = new RiskBoard();
+
+    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt", Board);
+
+    game.numberOfPlayerPlaying(2);
+
+    game.initPlayer(true);
+
+    game.chooseFirstTurn(true);
+
+    game.setArmyToCountry(true);
+  }
+
+  @Test
+  public void TestFourPlayers() {
+    setUpGame game = new setUpGame();
+    RiskBoard Board = new RiskBoard();
+
+    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt", Board);
+
+    game.numberOfPlayerPlaying(4);
+
+    game.initPlayer(true);
+
+    game.chooseFirstTurn(true);
+
+    game.setArmyToCountry(true);
+  }
+
+  @Test
+  public void TestFivePlayers() {
+    setUpGame game = new setUpGame();
+    RiskBoard Board = new RiskBoard();
+
+    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt", Board);
+
+    game.numberOfPlayerPlaying(5);
+
+    game.initPlayer(true);
+
+    game.chooseFirstTurn(true);
+
+    game.setArmyToCountry(true);
+  }
+
+  @Test
+  public void TestSixPlayers() {
+    setUpGame game = new setUpGame();
+    RiskBoard Board = new RiskBoard();
+
+    game.creatingBoard("src/test/java/Countries.txt","src/test/java/BorderingCountries.txt","src/test/java/Continents.txt", Board);
+
+    game.numberOfPlayerPlaying(6);
+
+    game.initPlayer(true);
+
+    game.chooseFirstTurn(true);
+
+    game.setArmyToCountry(true);
+  }
 }

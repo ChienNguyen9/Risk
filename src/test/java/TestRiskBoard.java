@@ -62,8 +62,7 @@ public class TestRiskBoard {
 
     board.returnContinents();
     board.returnNameOfContinent("Asia");
-    board.returnLocalCountries("Asia");
-    
+	board.returnLocalCountries("Asia");   
     
   }
 
@@ -121,6 +120,55 @@ public class TestRiskBoard {
     board.returnVacancy();
 
     board.returnExtraArmies("Asia");
+    
+  }
+  @Test
+  public void testClaimCountry(){
+    
+    String countryFile = "src/test/java/Countries.txt";
+    String borderingCountryFile = "src/test/java/BorderingCountries.txt";
+    String continentFile = "src/test/java/Continents.txt";
+    String fileLine;
+	RiskBoard board = new RiskBoard();
+	setUpGame game = new setUpGame();
+    Players player = new Players("Georgy",10);
+    
+    try{
+  		BufferedReader reader = new BufferedReader(new FileReader(countryFile));
+  		StringBuilder stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+		   }
+  		String fileInput = stringBuilder.toString();
+  		String[] Countries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Countries) + "\n");
+
+  		reader = new BufferedReader(new FileReader(borderingCountryFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null){
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		String[] borderingCountries = fileInput.split("\t");
+  		System.out.println(Arrays.toString(borderingCountries));
+
+  		reader = new BufferedReader(new FileReader(continentFile));
+  		stringBuilder = new StringBuilder();
+  		while((fileLine = reader.readLine()) != null) {
+  			stringBuilder.append(fileLine);
+  		}
+  		fileInput = stringBuilder.toString();
+  		String[] Continents = fileInput.split("\t");
+  		System.out.println(Arrays.toString(Continents) + "\n");
+
+		  board.SetBoard(Countries, Continents, borderingCountries);
+		}catch(FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+    }
+
+    game.claimCountry(true, board);
     
   }
 }
